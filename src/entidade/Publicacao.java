@@ -5,25 +5,36 @@
  */
 package entidade;
 
+import java.io.Serializable;
+import controle.controleExemplar;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Laiza
  */
 public class Publicacao {
+
     private int ISBN;
     private String titulo;
     private String autor;
     private String editora;
     private String status;
-    private Exemplar exemplar;
+    private Exemplar exemplarPublicacao;
+    private controleExemplar exemplar = new controleExemplar();
 
-    public Publicacao(int ISBN, String titulo, String autor, String editora, String status, Exemplar exemplar) {
-        this.ISBN = ISBN;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.editora = editora;
-        this.status = status;
-        this.exemplar = exemplar;
+    public Publicacao(int ISBN, String titulo, String autor, String editora) {
+        try{
+        exemplarPublicacao = this.exemplar.procuraExemplar(ISBN);
+            this.ISBN = ISBN;
+            this.titulo = titulo;
+            this.autor = autor;
+            this.editora = editora;
+            this.status = "Disponivel";
+        }catch(NullPointerException exc){System.out.print("ou aqui");
+            JOptionPane.showMessageDialog(null, "ISBN inválido\n\nCadastre um exemplar \nou informe um ISBN válido");
+        }
+
     }
 
     public String getStatus() {
@@ -34,15 +45,13 @@ public class Publicacao {
         this.status = status;
     }
 
-    public String  getExemplar() {
-        return "Numero:" + exemplar.getNumero();
+    public Exemplar getExemplar() {
+        return this.exemplarPublicacao;
     }
 
     public void setExemplar(Exemplar exemplar) {
-        this.exemplar = exemplar;
+        this.exemplarPublicacao = exemplar;
     }
-
-    
 
     public int getISBN() {
         return ISBN;
@@ -75,6 +84,5 @@ public class Publicacao {
     public void setEditora(String editora) {
         this.editora = editora;
     }
-    
-    
+
 }

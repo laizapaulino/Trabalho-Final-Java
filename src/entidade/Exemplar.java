@@ -5,19 +5,25 @@
  */
 package entidade;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Laiza
  */
 public class Exemplar {
+
     private int numero;
     private int ISBN;
     private float preco;
 
     public Exemplar(int numero, int ISBN, float preco) {
-        this.numero = numero;
-        this.ISBN = ISBN;
-        this.preco = preco;
+        
+            this.numero = numero;
+            this.ISBN = ISBN;
+            this.preco = preco;
+            
+
     }
 
     public int getNumero() {
@@ -43,5 +49,5 @@ public class Exemplar {
     public void setPreco(float preco) {
         this.preco = preco;
     }
-    
+
 }

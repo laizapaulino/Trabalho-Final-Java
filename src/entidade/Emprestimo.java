@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package entidade;
-import org.; 
+
+import java.io.Serializable;
 
 /**
  *
@@ -15,13 +16,13 @@ public class Emprestimo {
     private int ISBN;
     private int codigoAssociado;
     private int tempoMaximo;
-    private DateTime data; 
+    private Data data; 
 
-    public Emprestimo(int numeroExemplar, int ISBN, int dia, int mes, int ano, int codigoAssociado) {
-        this.data.set(ano, mes, dia);//Ano mes dia
+    public Emprestimo(int numeroExemplar, int ISBN, int dia, int mes, int ano, int codigoAssociado, int tempoMax) {
+        this.data = new Data(dia, mes, ano);//dia, mes, ano
         this.numeroExemplar = numeroExemplar;
         this.ISBN = ISBN;
-        
+        this.tempoMaximo = tempoMax;
         this.codigoAssociado = codigoAssociado;
     }
 
@@ -41,13 +42,7 @@ public class Emprestimo {
         this.ISBN = ISBN;
     }
 
-    public Calendar getData() {
-        return data;
-    }
 
-    public void setData(Calendar data) {
-        this.data = data;
-    }
 
     
     public int getTempoMaximo() {
@@ -62,5 +57,22 @@ public class Emprestimo {
     public void mudaStatusEmprestado(int ISBN, int numExemplar){///Implementar no controle principal
         
     }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public int getCodigoAssociado() {
+        return codigoAssociado;
+    }
+
+    public void setCodigoAssociado(int codigoAssociado) {
+        this.codigoAssociado = codigoAssociado;
+    }
+    
     
 }
