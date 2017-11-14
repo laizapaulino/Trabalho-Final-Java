@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Laiza
  */
-public class Exemplar {
+public class Exemplar implements Serializable{
 
     private int numero;
     private int ISBN;
@@ -49,5 +49,10 @@ public class Exemplar {
     public void setPreco(float preco) {
         this.preco = preco;
     }
-
+@Override
+    public String toString() {
+        return numero + " - " + ISBN + " - " + "Preço: " + preco;
+    }
+    
+   
 }

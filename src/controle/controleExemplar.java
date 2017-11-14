@@ -5,11 +5,14 @@
  */
 package controle;
 import  entidade.Exemplar;
-import java.util.ArrayList;
+import java.util.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  *
  * @author Laiza
@@ -26,35 +29,48 @@ public class controleExemplar {
     }
     
     public Exemplar procuraExemplar(int ISBN){
+        Exemplar x = null;
         for(int i=0;i<listaExemplar.size();i++){
             if(listaExemplar.get(i).getISBN()==ISBN){
-                return listaExemplar.get(i);
+                x= listaExemplar.get(i);
+                break;
             }
         }
-        return null;
+        return x;
+    }
+
+    public String getListaExemplar() {
+        String isso = "";
+        for(int i=0;i<listaExemplar.size();i++){
+            isso += "ISBN: "+listaExemplar.get(i).getISBN()+
+                    "\nNumero de sequencia:"+listaExemplar.get(i).getNumero()+
+                    "\nPreço: "+listaExemplar.get(i).getPreco()+"\n\n";
+        }
+        return isso;
     }
     
         public void serializar() throws Exception {
         try {
-            FileOutputStream arquivo = new FileOutputStream("listaExemplar.ser");
+            FileOutputStream arquivo = new FileOutputStream("exemplar.ser");
             ObjectOutputStream out = new ObjectOutputStream(arquivo);
             out.writeObject(listaExemplar);
             out.flush();
             out.close();
             arquivo.close();
+            System.out.print("alou2\n");
         } catch (Exception exc) {
-            throw new Exception("Arquivo Lista Exemplar não encontrado!");
+            throw new Exception("Arquivo Lista de Exemplares não encontrado!");
         }
     }
 
-    private void lerExemplar() {
+    public void lerExemplar() {
         try {
-            String nome = "listaExemplar.ser";
+            String nome = "exemplar.ser";
             FileInputStream arquivo = new FileInputStream(nome);
             ObjectInputStream in = new ObjectInputStream(arquivo);
             listaExemplar = (ArrayList<Exemplar>) in.readObject();
             in.close();
-        } catch (Exception ex) {
+        } catch (Exception ex) {System.out.print("alou\n");
             listaExemplar = new ArrayList<>();
         }
     }

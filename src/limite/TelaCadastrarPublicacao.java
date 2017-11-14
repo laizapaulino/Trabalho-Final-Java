@@ -6,6 +6,7 @@
 package limite;
 
 import controle.*;
+import entidade.Exemplar;
 import entidade.Publicacao;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,7 +29,7 @@ import javax.swing.JTextField;
 public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
 
     private final controlePublicacao ctrlPublicacao;
-    //private controleExemplar exemplar;
+    private controleExemplar ctrlExemplar = new controleExemplar();
     private final JPanel painel = new JPanel(new GridBagLayout());
     private final JTextField tfISBN = new JTextField(20);
     private final JTextField tfTitulo = new JTextField(20);
@@ -43,25 +44,25 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
         this.ctrlPublicacao = controle;
 
         painel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder(20, 30, 35, 50),
                 BorderFactory.createEmptyBorder()));
 
-        adicionarComponente(painel, new JLabel("ISBN"), 0, 0, 1, 1);
-        adicionarComponente(painel, tfISBN, 1, 0, 1, 1);
+        adicionarComponente(painel, new JLabel("ISBN"), 0, 1, 1, 1);
+        adicionarComponente(painel, tfISBN, 1, 1, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Titulo"), 0, 1, 1, 1);
-        adicionarComponente(painel, tfTitulo, 1, 1, 1, 1);
+        adicionarComponente(painel, new JLabel("Titulo"), 0, 2, 1, 1);
+        adicionarComponente(painel, tfTitulo, 1, 2, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Autor"), 0, 2, 1, 1);
-        adicionarComponente(painel, tfAutor, 1, 2, 1, 1);
+        adicionarComponente(painel, new JLabel("Autor"), 0, 3, 1, 1);
+        adicionarComponente(painel, tfAutor, 1, 3, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Editora"), 0, 3, 1, 1);
-        adicionarComponente(painel, tfEditora, 1, 3, 1, 1);
+        adicionarComponente(painel, new JLabel("Editora"), 0, 4, 1, 1);
+        adicionarComponente(painel, tfEditora, 1, 4, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Numero sequencia do exemplar"), 0, 4, 1, 1);
-        adicionarComponente(painel, tfExemplar, 1, 4, 1, 1);
+        adicionarComponente(painel, new JLabel("Numero sequencia do exemplar"), 0, 5, 1, 1);
+        adicionarComponente(painel, tfExemplar, 1, 5, 1, 1);
         btnCadastrar.addActionListener(this);
-        adicionarComponente(painel, btnCadastrar, 0, 5, 1, 2);
+        adicionarComponente(painel, btnCadastrar, 0, 6, 1, 2);
 
         super.add(painel);
         super.pack();
@@ -77,11 +78,16 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
             String autor = tfAutor.getText();
             String editora = tfEditora.getText();
             int exemplar = Integer.parseInt(tfExemplar.getText());
-            Publicacao x = new Publicacao(ISBN, titulo, autor, editora);
-            ctrlPublicacao.cadastraPublicacao(x);
-            this.dispose();
-        }catch (NullPointerException exc) {System.out.print("aqui");
+            if(ctrlExemplar.procuraExemplar(ISBN) != null){
+            //Publicacao x = new Publicacao(ISBN, titulo, autor, editora) ;
+            ctrlPublicacao.cadastraPublicacao(new Publicacao(ISBN, titulo, autor, editora));
+            System.out.print("Agora: ");ctrlPublicacao.serializar();
+            }this.dispose();//Fazer else
+        } catch (Exception exc) {
+            System.out.print("aqui\n");
+
             JOptionPane.showMessageDialog(this, exc.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
@@ -97,7 +103,5 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
         c.gridwidth = width;
         painel.add(componente, c);
     }
-public static void main(String aer[]){
-    TelaCadastrarPublicacao x =new TelaCadastrarPublicacao(new controlePublicacao());
-}
+
 }

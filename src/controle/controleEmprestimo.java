@@ -71,7 +71,7 @@ public class controleEmprestimo {
             out.close();
             arquivo.close();
         } catch (Exception exc) {
-            throw new Exception("Arquivo Notas Fiscais não encontrado!");
+            throw new Exception("Arquivo Lista de Emprestimos não encontrado!");
 
         }
     }

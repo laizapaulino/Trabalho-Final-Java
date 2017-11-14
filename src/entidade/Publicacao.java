@@ -6,14 +6,14 @@
 package entidade;
 
 import java.io.Serializable;
-import controle.controleExemplar;
+import controle.*;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Laiza
  */
-public class Publicacao {
+public class Publicacao implements Serializable {
 
     private int ISBN;
     private String titulo;
@@ -21,18 +21,22 @@ public class Publicacao {
     private String editora;
     private String status;
     private Exemplar exemplarPublicacao;
-    private controleExemplar exemplar = new controleExemplar();
 
     public Publicacao(int ISBN, String titulo, String autor, String editora) {
-        try{
-        exemplarPublicacao = this.exemplar.procuraExemplar(ISBN);
-            this.ISBN = ISBN;
+        controleExemplar exemplar = new controleExemplar();
+        controlePublicacao pub = new controlePublicacao();
+
+        exemplar.lerExemplar();
+        pub.lerPublicacoes();
+        try {
+            this.ISBN = exemplar.procuraExemplar(ISBN).getISBN();
             this.titulo = titulo;
             this.autor = autor;
             this.editora = editora;
             this.status = "Disponivel";
-        }catch(NullPointerException exc){System.out.print("ou aqui");
-            JOptionPane.showMessageDialog(null, "ISBN inválido\n\nCadastre um exemplar \nou informe um ISBN válido");
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(null, "Operação inválida");
+
         }
 
     }
@@ -83,6 +87,15 @@ public class Publicacao {
 
     public void setEditora(String editora) {
         this.editora = editora;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return this.autor + " - " + this.editora + " - " + " - " + this.status + "Titulo " + this.titulo;
     }
 
 }

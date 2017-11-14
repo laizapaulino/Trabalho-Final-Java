@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Laiza
  */
-public class Emprestimo {
+public class Emprestimo implements Serializable{
     private int numeroExemplar;
     private int ISBN;
     private int codigoAssociado;

@@ -81,21 +81,17 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
             int ISBN = Integer.parseInt(tfISBN.getText());
             float preco = Float.parseFloat(tfPreco.getText());
             if (ctrlExemplar.procuraExemplar(ISBN) == null) {
-
                 ctrlExemplar.cadastraExemplar(new Exemplar(numero, ISBN, preco));
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro");
             }
-            else
-                        JOptionPane.showMessageDialog(this,  "Erro");
-
             this.dispose();
-        } catch (Exception exc) {            System.out.print("aqui\n");
+        } catch (Exception exc) {
+            System.out.print("aqui\n");
 
             JOptionPane.showMessageDialog(this, exc.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
         }
     }
 
-    public static void main(String args[]) {
-        new TelaCadastrarExemplar(new controleExemplar());
-    }
 }
