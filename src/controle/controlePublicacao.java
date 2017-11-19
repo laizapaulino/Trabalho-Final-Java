@@ -22,51 +22,60 @@ public class controlePublicacao {
     final String nome = "Publicacoes.ser";
 
     public controlePublicacao() {
+        
         this.listaPublicacao = new ArrayList<>();
         this.lerPublicacoes();
+    }
+    ///Verficar mesmo ISBNe mesmo CODIGO
+
+    /* public Exemplar verificaSeExisteExemplar(int ISBN) {
+        controleExemplar exemplar = new controleExemplar();
+        for (int i = 0; i < exemplar.listaExemplar.size(); i++) {
+            if (exemplar.listaExemplar.get(i).getISBN() == ISBN) {
+                return exemplar.listaExemplar.get(i);
+            }
+        }
+        return null;
+    }*/
+    public Publicacao verificaSeISBNExiste(int ISBN) {
+        for (int i = 0; i < listaPublicacao.size(); i++) {
+            if (listaPublicacao.get(i).getISBN() == ISBN/*
+                    && listaPublicacao.get(i).getStatusEmprestado().equalsIgnoreCase("Disponivel")*/) {
+                return listaPublicacao.get(i);
+            }
+        }
+        return null;
     }
 
     public void cadastraPublicacao(Publicacao novaPublicacao) {
         listaPublicacao.add(novaPublicacao);
     }
 
-    public String procura(int ISBN) {
-        String disp = "Publicações disponiveis:\n\n", empre = "Publicações NÃO disponiveis:\n\n";
+   
+
+    public Publicacao procura(int ISBN) {
         for (int i = 0; i < listaPublicacao.size(); i++) {
-            if (listaPublicacao.get(i).getISBN() == ISBN && listaPublicacao.get(i).getStatus() == "Disponivel") {
-                disp += "Exemplar\n\t" + listaPublicacao.get(i).getExemplar() + "\n" + listaPublicacao.get(i).getTitulo() + "\n" + listaPublicacao.get(i).getStatus();
-            } else if (listaPublicacao.get(i).getISBN() == ISBN && listaPublicacao.get(i).getStatus() == "Indisponivel") {
-                empre += "Exemplar\n\t" + listaPublicacao.get(i).getExemplar() + "\n" + listaPublicacao.get(i).getTitulo() + "\n" + listaPublicacao.get(i).getStatus();
+            if (listaPublicacao.get(i).getISBN() == ISBN) {
+                return listaPublicacao.get(i);
             }
+
         }
-        return disp + "\n\n\n" + empre;
+        return null;
     }
 
-    public String procuraporTitulo(String titulo) {
-        String disp = "Publicações disponiveis:\n\n", empre = "Publicações NÃO disponiveis:\n\n";
-        for (int i = 0; i < listaPublicacao.size(); i++) {
-            if (listaPublicacao.get(i).getTitulo() == titulo && listaPublicacao.get(i).getStatus() == "Disponivel") {
-                disp += "Exemplar\n\t" + listaPublicacao.get(i).getExemplar() + "\n" + listaPublicacao.get(i).getTitulo() + "\n" + listaPublicacao.get(i).getStatus();
-            } else if (listaPublicacao.get(i).getTitulo() == titulo && listaPublicacao.get(i).getStatus() == "Indisponivel") {
-                empre += "Exemplar\n\t" + listaPublicacao.get(i).getExemplar() + "\n" + listaPublicacao.get(i).getTitulo() + "\n" + listaPublicacao.get(i).getStatus();
-            }
-        }
-        return disp + "\n\n\n" + empre;
-    }
-
+   
     public void serializar() throws Exception {
         try {
             FileOutputStream arquivo = new FileOutputStream(nome);
-            System.out.print("1\n");
+//            System.out.print("1\n");
 
             ObjectOutputStream out = new ObjectOutputStream(arquivo);
 
-            System.out.print("2\n");
+            //System.out.print("2\n");
             out.writeObject(listaPublicacao);
             out.flush();
             out.close();
             arquivo.close();
-            System.out.print("Foi\n");
         } catch (Exception exc) {
             throw new Exception("Arquivo Lista de Exemplares não encontrado!");
         }
@@ -78,7 +87,7 @@ public class controlePublicacao {
             ObjectInputStream in = new ObjectInputStream(arquivo);
             listaPublicacao = (ArrayList<Publicacao>) in.readObject();
             in.close();
-            System.out.println("Arroz");
+            //System.out.println("Arroz");
         } catch (Exception ex) {
             listaPublicacao = new ArrayList<>();
         }
@@ -86,12 +95,10 @@ public class controlePublicacao {
 
     public String getListaPublicacao() {
         String isso = "";
+        //System.out.println("---" + listaPublicacao.size());
         for (int i = 0; i < listaPublicacao.size(); i++) {
-            isso += "ISBN: " + listaPublicacao.get(i).getISBN()
-                    + "\nTitulo:" + listaPublicacao.get(i).getTitulo()
-                    + "\nAutor: " + listaPublicacao.get(i).getAutor()
-                    + "\nEditora: " + listaPublicacao.get(i).getEditora()
-                    + "\nStatus: " + listaPublicacao.get(i).getStatus() + "\n\n";
+            isso += listaPublicacao.get(i).toString();
+                    
 
         }
         return isso;

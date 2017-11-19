@@ -6,33 +6,46 @@
 package entidade;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
  * @author Laiza
  */
-public class Emprestimo implements Serializable{
-    private int numeroExemplar;
+public class Emprestimo implements Serializable {
+
+    private Exemplar numeroExemplar;
     private int ISBN;
     private int codigoAssociado;
     private int tempoMaximo;
-    private Data data; 
+    private GregorianCalendar dataa;
+    private Data data;
 
-    public Emprestimo(int numeroExemplar, int ISBN, int dia, int mes, int ano, int codigoAssociado, int tempoMax) {
-        this.data = new Data(dia, mes, ano);//dia, mes, ano
+    public Emprestimo(GregorianCalendar d, Exemplar numeroExemplar, int ISBN, /*int dia, int mes, int ano,*/ int codigoAssociado, int tempoMax) {
+        this.dataa =d;
+        //this.data = new Data(dia, mes, ano);//dia, mes, ano
         this.numeroExemplar = numeroExemplar;
         this.ISBN = ISBN;
         this.tempoMaximo = tempoMax;
         this.codigoAssociado = codigoAssociado;
     }
 
-    public int getNumeroExemplar() {
+    public GregorianCalendar getDataa() {
+        return dataa;
+    }
+
+    public void setDataa(GregorianCalendar dataa) {
+        this.dataa = dataa;
+    }
+
+    public Exemplar getExemplar() {
         return numeroExemplar;
     }
 
-    public void setNumeroExemplar(int numeroExemplar) {
-        this.numeroExemplar = numeroExemplar;
-    }
+
 
     public int getISBN() {
         return ISBN;
@@ -42,9 +55,6 @@ public class Emprestimo implements Serializable{
         this.ISBN = ISBN;
     }
 
-
-
-    
     public int getTempoMaximo() {
         return tempoMaximo;
     }
@@ -52,10 +62,9 @@ public class Emprestimo implements Serializable{
     public void setTempoMaximo(int tempoMaximo) {
         this.tempoMaximo = tempoMaximo;
     }
-    
-    
-    public void mudaStatusEmprestado(int ISBN, int numExemplar){///Implementar no controle principal
-        
+
+    public void mudaStatusEmprestado(int ISBN, int numExemplar) {///Implementar no controle principal
+
     }
 
     public Data getData() {
@@ -73,6 +82,5 @@ public class Emprestimo implements Serializable{
     public void setCodigoAssociado(int codigoAssociado) {
         this.codigoAssociado = codigoAssociado;
     }
-    
-    
+
 }

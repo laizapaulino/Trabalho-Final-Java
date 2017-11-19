@@ -29,7 +29,6 @@ import javax.swing.JTextField;
 public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
 
     private final controlePublicacao ctrlPublicacao;
-    private controleExemplar ctrlExemplar = new controleExemplar();
     private final JPanel painel = new JPanel(new GridBagLayout());
     private final JTextField tfISBN = new JTextField(20);
     private final JTextField tfTitulo = new JTextField(20);
@@ -44,7 +43,7 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
         this.ctrlPublicacao = controle;
 
         painel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(20, 30, 35, 50),
+                BorderFactory.createEmptyBorder(20, 30, 15, 50),
                 BorderFactory.createEmptyBorder()));
 
         adicionarComponente(painel, new JLabel("ISBN"), 0, 1, 1, 1);
@@ -62,10 +61,12 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
         adicionarComponente(painel, new JLabel("Numero sequencia do exemplar"), 0, 5, 1, 1);
         adicionarComponente(painel, tfExemplar, 1, 5, 1, 1);
         btnCadastrar.addActionListener(this);
-        adicionarComponente(painel, btnCadastrar, 0, 6, 1, 2);
+        adicionarComponente(painel, btnCadastrar, 2, 6, 1, 3);
 
         super.add(painel);
         super.pack();
+        super.setLocationRelativeTo(null);
+
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         super.setVisible(true);
     }
@@ -78,11 +79,23 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
             String autor = tfAutor.getText();
             String editora = tfEditora.getText();
             int exemplar = Integer.parseInt(tfExemplar.getText());
-            if(ctrlExemplar.procuraExemplar(ISBN) != null){
-            //Publicacao x = new Publicacao(ISBN, titulo, autor, editora) ;
-            ctrlPublicacao.cadastraPublicacao(new Publicacao(ISBN, titulo, autor, editora));
-            System.out.print("Agora: ");ctrlPublicacao.serializar();
-            }this.dispose();//Fazer else
+            controleExemplar ctrlExemplar = new controleExemplar();
+            if(ctrlPublicacao.verificaSeISBNExiste(ISBN) == null){
+                ctrlPublicacao.cadastraPublicacao(new Publicacao(ISBN, titulo, autor, editora, "Disponivel"));
+                System.out.print("Agora: ");
+                ctrlPublicacao.serializar();
+                JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso");
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "ISBN já existente");
+                //this.tfAutor.setText("");
+                //this.tfEditora.setText("");
+                //this.tfExemplar.setText("");
+                this.tfISBN.setText("");
+                //this.tfTitulo.setText("");
+
+            }//Fazer else
         } catch (Exception exc) {
             System.out.print("aqui\n");
 

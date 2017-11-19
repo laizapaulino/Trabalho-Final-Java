@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package controle;
-import  entidade.Exemplar;
+
+import entidade.Exemplar;
 import java.util.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,38 +19,83 @@ import java.util.Collections;
  * @author Laiza
  */
 public class controleExemplar {
-    ArrayList<Exemplar>listaExemplar = new ArrayList<>(); ;
+
+    public ArrayList<Exemplar> listaExemplar = new ArrayList<>();
+
+    ;
 
     public controleExemplar() {
         this.lerExemplar();
     }
-    
-    public void cadastraExemplar(Exemplar novoExemplar){
+
+    public void cadastraExemplar(Exemplar novoExemplar) {
         listaExemplar.add(novoExemplar);
     }
-    
-    public Exemplar procuraExemplar(int ISBN){
+
+    public Exemplar procuraExemplar(int ISBN) {
         Exemplar x = null;
-        for(int i=0;i<listaExemplar.size();i++){
-            if(listaExemplar.get(i).getISBN()==ISBN){
-                x= listaExemplar.get(i);
+        for (int i = 0; i < listaExemplar.size(); i++) {
+            if (listaExemplar.get(i).getISBN() == ISBN) {
+                x = listaExemplar.get(i);
                 break;
             }
         }
         return x;
     }
 
+    public String procuraporTitulo(String titulo) {
+        String disp = "Exemplares de " + titulo+ " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
+        for (int i = 0; i < listaExemplar.size(); i++) {
+            if (listaExemplar.get(i).getPublicacao().getTitulo() == titulo && listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
+                disp += "\n" + listaExemplar.get(i);
+            } else if (listaExemplar.get(i).getPublicacao().getTitulo() == titulo && listaExemplar.get(i).getStatus().equalsIgnoreCase("Indisponivel")) {
+                empre += "\n" + listaExemplar.get(i);
+            }
+        }
+        return disp + "\n\n\n" + empre;
+    }
+
+    public String procuraporISBN(int ISBN) {//System.out.print("---"+this.listaPublicacao.get(0).getStatusEmprestado());
+        String disp = "Exemplares de ISBN "+ ISBN + " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
+        for (int i = 0; i < listaExemplar.size(); i++) {
+            if (listaExemplar.get(i).getPublicacao().getISBN() == ISBN && listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
+                disp += "\n" + listaExemplar.get(i);
+            } else if (listaExemplar.get(i).getPublicacao().getISBN() == ISBN && listaExemplar.get(i).getStatus().equalsIgnoreCase("Inisponivel")) {
+                empre += "\n" + listaExemplar.get(i);
+            }
+        }
+        return disp + "\n\n\n" + empre;
+    }
+
+    public void mudastatus(int isbn, int numeroEx, String status) {
+        try {
+            for (int i = 0; i < listaExemplar.size(); i++) {
+
+                if (listaExemplar.get(i).getISBN() == isbn && listaExemplar.get(i).getNumero() == numeroEx) {
+
+                    listaExemplar.get(i).setStatus(status);
+                    System.out.print("-- foi--" + listaExemplar.get(i).getStatus());
+                    break;
+                }
+            }
+
+            this.serializar();
+        } catch (Exception exc) {
+            System.out.print("--exc--");
+
+        }
+
+    }
+
     public String getListaExemplar() {
         String isso = "";
-        for(int i=0;i<listaExemplar.size();i++){
-            isso += "ISBN: "+listaExemplar.get(i).getISBN()+
-                    "\nNumero de sequencia:"+listaExemplar.get(i).getNumero()+
-                    "\nPreço: "+listaExemplar.get(i).getPreco()+"\n\n";
+        for (int i = 0; i < listaExemplar.size(); i++) {
+            isso += listaExemplar.get(i).toString();
         }
         return isso;
     }
-    
-        public void serializar() throws Exception {
+
+    public void serializar() throws Exception {
         try {
             FileOutputStream arquivo = new FileOutputStream("exemplar.ser");
             ObjectOutputStream out = new ObjectOutputStream(arquivo);
@@ -57,7 +103,7 @@ public class controleExemplar {
             out.flush();
             out.close();
             arquivo.close();
-            System.out.print("alou2\n");
+            //System.out.print("alou2\n");
         } catch (Exception exc) {
             throw new Exception("Arquivo Lista de Exemplares não encontrado!");
         }
@@ -70,7 +116,8 @@ public class controleExemplar {
             ObjectInputStream in = new ObjectInputStream(arquivo);
             listaExemplar = (ArrayList<Exemplar>) in.readObject();
             in.close();
-        } catch (Exception ex) {System.out.print("alou\n");
+        } catch (Exception ex) {
+            //System.out.print("alou\n");
             listaExemplar = new ArrayList<>();
         }
     }

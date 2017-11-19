@@ -19,32 +19,30 @@ import java.util.ArrayList;
  */
 public class controleAssociado {
 
-    ArrayList<Associado> listaAssociado = new ArrayList<>();
+    ArrayList<Associado> listaAssociado;
+    final String nome = "associados.ser";
 
-    public void cadastraAssociado(Associado novoAssociado) throws Exception {
-        if (getAssociado(novoAssociado.getCodigo()) != null) {
-            throw new Exception("Associado já cadastrado!");
-        }
-        
+    public controleAssociado() {
+        this.listaAssociado = new ArrayList<>();
+        lerAssociados();
+    }
+
+    public void cadastraAssociado(Associado novoAssociado) {
         listaAssociado.add(novoAssociado);
     }
 
-    public controleAssociado() {
-        lerAssociados();
-    }
-    
-
-    public Associado getAssociado(int cod) {
-        for (int i=0; i<listaAssociado.size(); i++){
-            if (listaAssociado.get(i).getCodigo() == cod)
+    public Associado procuraAssociado(int cod) {
+        for (int i = 0; i < listaAssociado.size(); i++) {
+            if (listaAssociado.get(i).getCodigo() == cod) {
                 return listaAssociado.get(i);
+            }
         }
         return null;
     }
-    
+
     public void serializar() throws Exception {
         try {
-            FileOutputStream arquivo = new FileOutputStream("associados.ser");
+            FileOutputStream arquivo = new FileOutputStream(nome);
             ObjectOutputStream out = new ObjectOutputStream(arquivo);
             out.writeObject(listaAssociado);
             out.flush();
@@ -54,10 +52,28 @@ public class controleAssociado {
             throw new Exception("Arquivo Associado não encontrado!");
         }
     }
-    
-    private void lerAssociados() {
+
+    public String retornaPorStatus(String Status) {
+        String x = "Listando " + Status;
+        System.out.println("----"+listaAssociado.size()+"---"+listaAssociado.get(0).getStatus()+" "+Status);
+        for (int i = 0; i < listaAssociado.size(); i++) {
+            if (listaAssociado.get(i).getStatus().equalsIgnoreCase(Status) == true) {
+
+                x += "\n\nCodigo: " + listaAssociado.get(i).getCodigo() + "\nNome: " + listaAssociado.get(i).getNome()
+                        + "\nEndereço: " + listaAssociado.get(i).getEndereco() + "\nEmail: " + listaAssociado.get(i).getEmail() + "\nMulta: ";
+                if (listaAssociado.get(i).isTemMulta() == true) {
+                    x += "Tem Multa\n\n";
+                } else {
+                    x += "Não tem Multa\n\n";
+                }
+
+            }
+        }
+        return x;
+    }
+
+    public void lerAssociados() {
         try {
-            String nome = "associados.ser";
             FileInputStream arquivo = new FileInputStream(nome);
             ObjectInputStream in = new ObjectInputStream(arquivo);
             listaAssociado = (ArrayList<Associado>) in.readObject();
@@ -66,5 +82,5 @@ public class controleAssociado {
             listaAssociado = new ArrayList<>();
         }
     }
-    
+
 }

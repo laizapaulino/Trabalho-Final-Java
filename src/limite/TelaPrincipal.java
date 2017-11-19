@@ -15,8 +15,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,8 +35,9 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
     private final JButton btnCadastrarExemplar = new JButton("Cadastrar exemplar");
     private final JButton btnCadastrarPublicacao = new JButton("Cadastrar publicação");
     private final JButton btnEmprestimo = new JButton("Novo empréstimo");
-    private final JButton btnListaExemplar = new JButton("Listar exemplares");
-    private final JButton btnListaPublicacoes = new JButton("Listar publicações");
+    private final JButton btnListar = new JButton("Consultas gerais");
+
+    //private final JButton btnListaPublicacoes = new JButton("Listar publicações");
 
     private final JButton btnsair = new JButton("Sair");
 
@@ -61,15 +64,17 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
         this.btnCadastrarExemplar.addActionListener(this);
         this.btnCadastrarPublicacao.addActionListener(this);
         this.btnEmprestimo.addActionListener(this);
-        this.btnListaExemplar.addActionListener(this);
-        this.btnListaPublicacoes.addActionListener(this);
-        
+        this.btnListar.addActionListener(this);
+        //this.btnListaPublicacoes.addActionListener(this);
+
+
+
         adicionarComponente(painel, this.btnCadastrarAssociado, 0, 0, 1, 1);
         adicionarComponente(painel, this.btnCadastrarExemplar, 0, 1, 1, 1);
         adicionarComponente(painel, this.btnCadastrarPublicacao, 0, 2, 1, 1);
         adicionarComponente(painel, this.btnEmprestimo, 0, 3, 1, 1);
-        adicionarComponente(painel, this.btnListaExemplar, 0, 4, 1, 1);
-        adicionarComponente(painel, this.btnListaPublicacoes, 0, 5, 1, 1);
+        adicionarComponente(painel, this.btnListar, 0, 4, 1, 1);
+        //adicionarComponente(painel, this.btnListaPublicacoes, 0, 5, 1, 1);
 
         super.add(painel);
         super.addWindowListener(this);
@@ -114,14 +119,14 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
                 new TelaNovoEmprestimo(this.ctrlEmprestimo);
                 this.ctrlEmprestimo.serializar();
             }
-            if (btn.equals(this.btnListaExemplar)) {
-                new TelaExibeExemplar(this.ctrlExemplar);
-                
+            if (btn.equals(this.btnListar)) {
+                new TelaExibeInformacoes(new controlePublicacao(),this.ctrlExemplar, this.ctrlAssociado);
+
             }
-            if (btn.equals(this.btnListaPublicacoes)) {
-                new TelaExibePublicacoes(this.ctrlPublicacao);
-                
-            }
+            //if (btn.equals(this.btnListaPublicacoes)) {
+              //  new TelaExibePublicacoes(this.ctrlPublicacao);
+
+            //}
 
         } catch (Exception exc) {
 
@@ -167,5 +172,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
 
     public static void main(String h[]) {
         new TelaPrincipal();
+        Date a = new Date();
+        System.out.print(a.getMonth());
     }
 }

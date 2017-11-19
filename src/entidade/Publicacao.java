@@ -19,44 +19,17 @@ public class Publicacao implements Serializable {
     private String titulo;
     private String autor;
     private String editora;
-    private String status;
-    private Exemplar exemplarPublicacao;
 
-    public Publicacao(int ISBN, String titulo, String autor, String editora) {
-        controleExemplar exemplar = new controleExemplar();
-        controlePublicacao pub = new controlePublicacao();
-
-        exemplar.lerExemplar();
-        pub.lerPublicacoes();
-        try {
-            this.ISBN = exemplar.procuraExemplar(ISBN).getISBN();
+    public Publicacao() {
+    }
+    
+    public Publicacao(int ISBN, String titulo, String autor, String editora, String status) {
+            this.ISBN = ISBN;
             this.titulo = titulo;
             this.autor = autor;
-            this.editora = editora;
-            this.status = "Disponivel";
-        } catch (Exception exc) {
-            JOptionPane.showMessageDialog(null, "Operação inválida");
-
-        }
-
+            this.editora = editora;     
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Exemplar getExemplar() {
-        return this.exemplarPublicacao;
-    }
-
-    public void setExemplar(Exemplar exemplar) {
-        this.exemplarPublicacao = exemplar;
-    }
-
+    
     public int getISBN() {
         return ISBN;
     }
@@ -95,7 +68,11 @@ public class Publicacao implements Serializable {
      */
     @Override
     public String toString() {
-        return this.autor + " - " + this.editora + " - " + " - " + this.status + "Titulo " + this.titulo;
+        return "\nTitulo:" + getTitulo()
+                   // + "\nNumero: " + listaPublicacao.get(i).getExemplar().getNumero()
+                    + "\nISBN: " + getISBN()
+                    + "\nAutor: " + getAutor()
+                    + "\nEditora: " +getEditora();
     }
 
 }

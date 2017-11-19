@@ -29,12 +29,12 @@ public class TelaExibeExemplar extends JDialog{
 
     private controleExemplar ctrlExemplar;
     private final JPanel painel = new JPanel(new GridBagLayout());
-    private final JTextArea resultado = new JTextArea(20, 20);
+    private final JTextArea resultado = new JTextArea(20, 40);
 
     public TelaExibeExemplar(controleExemplar ctrlExemplar) {
         this.ctrlExemplar = ctrlExemplar;
         painel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder(55, 50, 55, 50),
                 BorderFactory.createEmptyBorder()));
 
         resultado.setEditable(false);
@@ -53,7 +53,9 @@ public class TelaExibeExemplar extends JDialog{
         super.setVisible(true);
         
     }
-     private void adicionarComponente(JPanel painel, JComponent componente,
+     
+    
+    private void adicionarComponente(JPanel painel, JComponent componente,
             int gridx, int gridy, int height, int width) {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);

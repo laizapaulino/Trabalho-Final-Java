@@ -13,8 +13,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  *
@@ -25,11 +28,31 @@ public class controleEmprestimo {
     ArrayList<Emprestimo> listaEmprestimos = new ArrayList<>();
     Data hoje;
 
-    
+    public controleEmprestimo() {
+        this.lerEmprestimos();
+    }
 
-    public void fazerEmprestimo(Emprestimo novoEmprestimo) {
+    public Exemplar verificaLivroExisteDisponivel(int numeroEx, int ISBN) {
+        controleExemplar e = new controleExemplar();
+        for (int i = 0; i < e.listaExemplar.size(); i++) {
+            if(e.listaExemplar.get(i).getNumero() == numeroEx && e.listaExemplar.get(i).getISBN() == ISBN && e.listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")){
+                return e.listaExemplar.get(i);
+            }
+        }
+
+        return null;
+    }
+
+    public Associado verificaAssoc(int matricula) {
+        controleAssociado a = new controleAssociado();
+
+        return a.procuraAssociado(matricula);
+    }
+
+    public void fazerEmprestimo(Emprestimo novoEmprestimo)  {
         listaEmprestimos.add(novoEmprestimo);
-
+        controleExemplar a = new controleExemplar();
+        a.mudastatus(novoEmprestimo.getISBN(), novoEmprestimo.getExemplar().getNumero(), "Indisponivel");
     }
 
     public void devolucao(int codigoAssociado, int ISBN, Data hoje) {
@@ -75,7 +98,7 @@ public class controleEmprestimo {
 
         }
     }
-    
+
     private void lerEmprestimos() {
         try {
             String nome = "emprestimosLivros.ser";
@@ -87,5 +110,5 @@ public class controleEmprestimo {
             listaEmprestimos = new ArrayList<>();
         }
     }
-    
+
 }

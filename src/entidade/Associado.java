@@ -4,19 +4,22 @@
  * and open the template in the editor.
  */
 package entidade;
+
 import java.io.Serializable;
 
 /**
  *
  * @author Laiza
  */
-public class Associado {
+public class Associado implements Serializable {
+
     private int codigo;
     private String nome;
     private String endereco;
     private String email;
     private String status;
     private boolean temMulta;
+    private int tempoMax;
 
     public Associado(int codigo, String nome, String endereco, String email, String status) {
         this.codigo = codigo;
@@ -25,6 +28,14 @@ public class Associado {
         this.email = email;
         this.status = status;
         this.temMulta = false;
+        if (status == "Graduação") {
+            this.tempoMax = 7;
+        } else if (status == "Pós-graduação") {
+            this.tempoMax = 10;
+        } else if (status == "Professor") {
+            this.tempoMax = 14;
+        }
+
     }
 
     public int getCodigo() {
@@ -33,6 +44,14 @@ public class Associado {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    public int getTempoMax() {
+        return tempoMax;
+    }
+
+    public void setTempoMax(int tempoMax) {
+        this.tempoMax = tempoMax;
     }
 
     public String getNome() {
@@ -74,9 +93,16 @@ public class Associado {
     public void setTemMulta(boolean temMulta) {
         this.temMulta = temMulta;
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Nome: " + getNome()
+                +"\n"+getStatus()
+                // + "\nNumero: " + listaPublicacao.get(i).getExemplar().getNumero()
+                + "\nEditora: " + getStatus()
+                + "\nEndereco:" + getEndereco()
+                + "\nEmail: " + this.getEmail()
+                +"\nMulta: " + this.isTemMulta();
+
+    }
 }

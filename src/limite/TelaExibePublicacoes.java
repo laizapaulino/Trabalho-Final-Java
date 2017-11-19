@@ -25,7 +25,7 @@ import javax.swing.JTextArea;
  * @author Laiza
  */
 public class TelaExibePublicacoes extends JDialog {
-    private controlePublicacao ctrlPublicacao = new controlePublicacao();
+    private controlePublicacao ctrlPublicacao ;
     private final JPanel painel = new JPanel(new GridBagLayout());
     private final JTextArea resultado = new JTextArea(20, 20);
 
@@ -40,10 +40,10 @@ public class TelaExibePublicacoes extends JDialog {
         String isso = this.ctrlPublicacao.getListaPublicacao();
         resultado.setText(isso+"\n\n");
         
-        JScrollPane scroll = new JScrollPane(resultado, 
+           JScrollPane scroll = new JScrollPane(resultado, 
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        adicionarComponente(painel, new JLabel("Lista publicações cadastradas"), 0, 0, 1, 1);
+        adicionarComponente(painel, new JLabel("Lista de publicações cadastradas"), 0, 0, 1, 1);
         adicionarComponente(painel, scroll, 0, 1, 1, 1);
         super.add(painel);
         super.pack();
@@ -52,7 +52,7 @@ public class TelaExibePublicacoes extends JDialog {
         super.setVisible(true);
         
     }
-     private void adicionarComponente(JPanel painel, JComponent componente,
+    private void adicionarComponente(JPanel painel, JComponent componente,
             int gridx, int gridy, int height, int width) {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
@@ -64,5 +64,9 @@ public class TelaExibePublicacoes extends JDialog {
         c.gridheight = height;
         c.gridwidth = width;
         painel.add(componente, c);
+    }
+    
+    public static void main(String args[]){
+        new TelaExibePublicacoes(new controlePublicacao());
     }
 }

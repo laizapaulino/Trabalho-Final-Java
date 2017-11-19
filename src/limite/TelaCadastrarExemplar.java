@@ -40,7 +40,7 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
         this.ctrlExemplar = controle;
 
         painel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(25, 45, 25, 45),
+                BorderFactory.createEmptyBorder(20, 30, 20, 35),
                 BorderFactory.createEmptyBorder()));
 
         adicionarComponente(painel, new JLabel("ISBN"), 0, 0, 1, 1);
@@ -53,9 +53,10 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
         adicionarComponente(painel, tfPreco, 1, 2, 1, 1);
 
         btnCadastrar.addActionListener(this);
-        adicionarComponente(painel, btnCadastrar, 0, 3, 1, 1);
+        adicionarComponente(painel, btnCadastrar, 2, 3, 1, 1);
         super.add(painel);
         super.pack();
+        super.setLocationRelativeTo(null);
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         super.setVisible(true);
 
@@ -80,14 +81,20 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
             int numero = Integer.parseInt("1" + tfNumero.getText());
             int ISBN = Integer.parseInt(tfISBN.getText());
             float preco = Float.parseFloat(tfPreco.getText());
-            if (ctrlExemplar.procuraExemplar(ISBN) == null) {
-                ctrlExemplar.cadastraExemplar(new Exemplar(numero, ISBN, preco));
+            controlePublicacao x = new controlePublicacao();
+            Publicacao a = x.verificaSeISBNExiste(ISBN);
+            if (a != null) {
+                ctrlExemplar.cadastraExemplar(new Exemplar(a, numero, ISBN, preco));
+                JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso");
+                this.ctrlExemplar.serializar();
+                this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Erro");
+                tfISBN.setText("");
+                JOptionPane.showMessageDialog(this, "Erro dados inválidos");
             }
-            this.dispose();
+
         } catch (Exception exc) {
-            System.out.print("aqui\n");
+            // System.out.print("aqui\n");
 
             JOptionPane.showMessageDialog(this, exc.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 

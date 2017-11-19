@@ -11,19 +11,37 @@ import java.io.Serializable;
  *
  * @author Laiza
  */
-public class Exemplar implements Serializable{
+public class Exemplar implements Serializable {
 
     private int numero;
     private int ISBN;
     private float preco;
+    private String status;
+    Publicacao publicacao = new Publicacao();
 
-    public Exemplar(int numero, int ISBN, float preco) {
-        
-            this.numero = numero;
-            this.ISBN = ISBN;
-            this.preco = preco;
-            
+    public Exemplar(Publicacao pub, int numero, int ISBN, float preco) {
+        this.publicacao = pub;
+        this.numero = numero;
+        this.ISBN = ISBN;
+        this.preco = preco;
+        this.status = "Disponivel";
 
+    }
+
+    public Publicacao getPublicacao() {
+        return publicacao;
+    }
+
+    public void setPublicacao(Publicacao publicacao) {
+        this.publicacao = publicacao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getNumero() {
@@ -49,10 +67,15 @@ public class Exemplar implements Serializable{
     public void setPreco(float preco) {
         this.preco = preco;
     }
-@Override
-    public String toString() {
-        return numero + " - " + ISBN + " - " + "Preço: " + preco;
+    public String getTitulo(){
+        return publicacao.getTitulo();
     }
-    
-   
+    @Override
+    public String toString() {
+        return "TITULO: "+getTitulo()+
+                "\nNumero do Exemplar: " + numero + 
+                "\nISBN: " + ISBN + 
+                " \nStatus: "+status+"\n\n";// + "Preço: " + preco;
+    }
+
 }
