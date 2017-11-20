@@ -75,7 +75,7 @@ public class Exemplar implements Serializable {
         return "TITULO: "+getTitulo()+
                 "\nNumero do Exemplar: " + numero + 
                 "\nISBN: " + ISBN + 
-                " \nStatus: "+status+"\n\n";// + "Preço: " + preco;
+                " \nStatus: "+status+"\n";// + "Preço: " + preco;
     }
 
 }

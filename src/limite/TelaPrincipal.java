@@ -57,7 +57,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
         super("Sistema de biblioteca");
         this.inicializaControles();
         painel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(30, 50, 30, 50),
+                BorderFactory.createEmptyBorder(50, 70, 50, 70),
                 BorderFactory.createEmptyBorder()));
 
         this.btnCadastrarAssociado.addActionListener(this);

@@ -25,13 +25,14 @@ import javax.swing.JTextArea;
  *
  * @author Laiza
  */
-public class TelaExibePublicacoes extends JDialog {
+public class TelaExibePublicacoes extends JFrame {
 
     private controlePublicacao ctrlPublicacao;
     private final JPanel painel = new JPanel(new GridBagLayout());
     private final JTextArea resultado = new JTextArea(20, 20);
 
     public TelaExibePublicacoes(controlePublicacao ctrlPublicacao) {
+        super("Publicações");
         this.ctrlPublicacao = ctrlPublicacao;
         painel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(35, 55, 35, 55),

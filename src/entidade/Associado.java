@@ -99,9 +99,8 @@ public class Associado implements Serializable {
     @Override
     public String toString() {
         return "Nome: " + getNome()
-                +"\n"+getStatus()
+                +"\nAssociado: "+getStatus()
                 // + "\nNumero: " + listaPublicacao.get(i).getExemplar().getNumero()
-                + "\nEditora: " + getStatus()
                 + "\nEndereco:" + getEndereco()
                 + "\nEmail: " + this.getEmail()
                 +"\nMulta: " + this.isTemMulta()

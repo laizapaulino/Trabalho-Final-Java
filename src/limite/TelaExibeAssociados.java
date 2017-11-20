@@ -34,7 +34,7 @@ public class TelaExibeAssociados extends JFrame implements ActionListener {
     private final JButton btnProcurar = new JButton("Procurar");
 
     public TelaExibeAssociados(controleAssociado ctrlAssociado) {
-        //super("Lista exemplares cadastrados");
+        super("Lista exemplares cadastrados");
         this.ctrlAssociado = ctrlAssociado;
         painel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(35, 55, 35, 55),

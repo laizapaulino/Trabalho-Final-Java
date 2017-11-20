@@ -78,10 +78,10 @@ public class Emprestimo implements Serializable {
     
     @Override
     public String toString() {
-        return numeroExemplar
-                + "\nISBN: "+getISBN()+
+        return "Titulo: "+numeroExemplar.getTitulo()
+                +"\nISBN: "+getISBN()+
                 "\nCodigo Associado: " + codigoAssociado + 
-                " \n: "+dataa+"\n\n";// + "Preço: " + preco;
+                " \nData de emprestimo: "+dataa.getTime().getDate()+"/"+(dataa.getTime().getMonth()+1)+"\n\n";// + "Preço: " + preco;
     }
 
 

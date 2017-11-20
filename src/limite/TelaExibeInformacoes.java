@@ -36,6 +36,7 @@ public class TelaExibeInformacoes extends JFrame implements ActionListener {
     private final JButton btnListaPublicacoes = new JButton("Listar publicações");
     private final JButton btnListaAssociados = new JButton("Listar associados");
         private final JButton btnConsultaPublicacao = new JButton("Consultar publicaçao");
+        private final JButton btnListaEmprestimos = new JButton("Lista emprestimos");
 
     private controlePublicacao ctrlPublicacao;
     private controleExemplar ctrlExemplar;
@@ -56,6 +57,7 @@ public class TelaExibeInformacoes extends JFrame implements ActionListener {
         this.btnListaExemplar.addActionListener(this);
         this.btnListaPublicacoes.addActionListener(this);
         this.btnConsultaPublicacao.addActionListener(this);
+        this.btnListaEmprestimos.addActionListener(this);
 
         adicionarComponente(painel, this.btnListaPublicacoes, 0, 1, 1, 1);
         adicionarComponente(painel, this.btnListaExemplar, 0, 2, 1, 1);
@@ -64,7 +66,7 @@ public class TelaExibeInformacoes extends JFrame implements ActionListener {
         //adicionarComponente(painel, tfTitulo, 0, 4, 1, 1);
         
         adicionarComponente(painel, this.btnConsultaPublicacao, 0, 4, 1, 1);
-        //adicionarComponente(painel, tfTitulo, 0, 4, 1, 1);
+        adicionarComponente(painel, this.btnListaEmprestimos, 0, 5, 1, 1);
 
         super.add(painel);
         super.pack();
@@ -91,6 +93,10 @@ public class TelaExibeInformacoes extends JFrame implements ActionListener {
             }
             else if (btn.equals(this.btnConsultaPublicacao)) {
                   new TelaConsultaPublicacao(new controleExemplar());
+
+            }
+            else if (btn.equals(this.btnListaEmprestimos)) {
+                  new TelaExibeEmprestimos(new controleEmprestimo());
 
             }
 
