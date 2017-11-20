@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
  */
 public class Emprestimo implements Serializable {
 
-    private Exemplar numeroExemplar;
+    private final Exemplar numeroExemplar;
     private int ISBN;
     private int codigoAssociado;
     private int tempoMaximo;
@@ -25,7 +25,7 @@ public class Emprestimo implements Serializable {
     private Data data;
 
     public Emprestimo(GregorianCalendar d, Exemplar numeroExemplar, int ISBN, /*int dia, int mes, int ano,*/ int codigoAssociado, int tempoMax) {
-        this.dataa =d;
+        this.dataa = d;
         //this.data = new Data(dia, mes, ano);//dia, mes, ano
         this.numeroExemplar = numeroExemplar;
         this.ISBN = ISBN;
@@ -67,14 +67,7 @@ public class Emprestimo implements Serializable {
 
     }
 
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
-
+   
     public int getCodigoAssociado() {
         return codigoAssociado;
     }
@@ -82,5 +75,14 @@ public class Emprestimo implements Serializable {
     public void setCodigoAssociado(int codigoAssociado) {
         this.codigoAssociado = codigoAssociado;
     }
+    
+    @Override
+    public String toString() {
+        return numeroExemplar
+                + "\nISBN: "+getISBN()+
+                "\nCodigo Associado: " + codigoAssociado + 
+                " \n: "+dataa+"\n\n";// + "Preço: " + preco;
+    }
+
 
 }

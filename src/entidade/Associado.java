@@ -20,8 +20,10 @@ public class Associado implements Serializable {
     private String status;
     private boolean temMulta;
     private int tempoMax;
+    public  int valorMulta ;
 
     public Associado(int codigo, String nome, String endereco, String email, String status) {
+        this.valorMulta = 0;
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
@@ -102,7 +104,8 @@ public class Associado implements Serializable {
                 + "\nEditora: " + getStatus()
                 + "\nEndereco:" + getEndereco()
                 + "\nEmail: " + this.getEmail()
-                +"\nMulta: " + this.isTemMulta();
+                +"\nMulta: " + this.isTemMulta()
+                +"\nValor da multa: "+ this.valorMulta+"\n";
 
     }
 }

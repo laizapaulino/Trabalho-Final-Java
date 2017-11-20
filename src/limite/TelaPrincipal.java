@@ -36,9 +36,9 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
     private final JButton btnCadastrarPublicacao = new JButton("Cadastrar publicação");
     private final JButton btnEmprestimo = new JButton("Novo empréstimo");
     private final JButton btnListar = new JButton("Consultas gerais");
+    private final JButton btnDevolve = new JButton("Devolver exemplar");
 
     //private final JButton btnListaPublicacoes = new JButton("Listar publicações");
-
     private final JButton btnsair = new JButton("Sair");
 
     private controleAssociado ctrlAssociado;
@@ -65,17 +65,17 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
         this.btnCadastrarPublicacao.addActionListener(this);
         this.btnEmprestimo.addActionListener(this);
         this.btnListar.addActionListener(this);
+        this.btnDevolve.addActionListener(this);
+
         //this.btnListaPublicacoes.addActionListener(this);
-
-
-
         adicionarComponente(painel, this.btnCadastrarAssociado, 0, 0, 1, 1);
         adicionarComponente(painel, this.btnCadastrarExemplar, 0, 1, 1, 1);
         adicionarComponente(painel, this.btnCadastrarPublicacao, 0, 2, 1, 1);
         adicionarComponente(painel, this.btnEmprestimo, 0, 3, 1, 1);
-        adicionarComponente(painel, this.btnListar, 0, 4, 1, 1);
-        //adicionarComponente(painel, this.btnListaPublicacoes, 0, 5, 1, 1);
+        adicionarComponente(painel, this.btnDevolve, 0, 4, 1, 1);
+        adicionarComponente(painel, this.btnListar, 0, 5, 1, 1);
 
+        //adicionarComponente(painel, this.btnListaPublicacoes, 0, 5, 1, 1);
         super.add(painel);
         super.addWindowListener(this);
         super.pack();
@@ -110,24 +110,30 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
             if (btn.equals(this.btnCadastrarExemplar)) {
                 new TelaCadastrarExemplar(this.ctrlExemplar);
                 this.ctrlExemplar.serializar();
+
             }
             if (btn.equals(this.btnCadastrarPublicacao)) {
                 new TelaCadastrarPublicacao(this.ctrlPublicacao);
                 this.ctrlPublicacao.serializar();
+                //ctrlPublicacao.lerPublicacoes();
             }
             if (btn.equals(this.btnEmprestimo)) {
                 new TelaNovoEmprestimo(this.ctrlEmprestimo);
                 this.ctrlEmprestimo.serializar();
+                ctrlEmprestimo.lerEmprestimos();
             }
             if (btn.equals(this.btnListar)) {
-                new TelaExibeInformacoes(new controlePublicacao(),this.ctrlExemplar, this.ctrlAssociado);
+                new TelaExibeInformacoes(this.ctrlPublicacao, this.ctrlExemplar, this.ctrlAssociado);
+
+            }
+            if (btn.equals(this.btnDevolve)) {
+                new TelaDevolveEmprestimo(this.ctrlEmprestimo);
 
             }
             //if (btn.equals(this.btnListaPublicacoes)) {
-              //  new TelaExibePublicacoes(this.ctrlPublicacao);
+            //  new TelaExibePublicacoes(this.ctrlPublicacao);
 
             //}
-
         } catch (Exception exc) {
 
         }

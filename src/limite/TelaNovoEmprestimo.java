@@ -42,10 +42,8 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
     private final JTextField tfDia = new JTextField(2);
     private final JTextField tfMes = new JTextField(2);
     private final JTextField tfAno = new JTextField(4);
-
     private GregorianCalendar dataInicial;
     private final JFormattedTextField tfData = new JFormattedTextField(new SimpleDateFormat("dd/MM/yyyy"));
-
     private final JButton btnCadastrar = new JButton("Cadastrar emprestimo");
 
     public TelaNovoEmprestimo(controleEmprestimo controle) {
@@ -71,14 +69,7 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
             dateMask.install(tfData);
             adicionarComponente(painel, tfData, 1, 3, 1, 1);
 
-            /* adicionarComponente(painel, new JLabel("Dia"), 0, 3, 1, 1);
-        adicionarComponente(painel, tfDia, 1, 3, 2, 1);
-
-        adicionarComponente(painel, new JLabel("Mes"), 0, 4, 1, 1);
-        adicionarComponente(painel, tfMes, 2, 3, 2, 2);
-
-        adicionarComponente(painel, new JLabel("Ano"), 0, 5, 1, 1);
-        adicionarComponente(painel, tfAno, 1, 5, 2, 1);*/
+            
             btnCadastrar.addActionListener(this);
             adicionarComponente(painel, btnCadastrar, 2, 6, 1, 3);
             super.add(painel);
@@ -98,20 +89,17 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
             int numeroExemplar = Integer.parseInt(tfNumeroExemplar.getText());
             int ISBN = Integer.parseInt(tfISBN.getText());
             int codigoAssociado = Integer.parseInt(tfcodigoAssociado.getText());
-            //int dia = Integer.parseInt(tfDia.getText());
-            //int mes = Integer.parseInt(tfMes.getText());
-            //int ano = Integer.parseInt(tfAno.getText());
+            
 
             Associado aw = ctrlEmprestimo.verificaAssoc(codigoAssociado);
             Exemplar aq = ctrlEmprestimo.verificaLivroExisteDisponivel(numeroExemplar, ISBN);
-            System.out.print(aw + "\n" + aq);
             GregorianCalendar gc = criarData(this.tfData.getText());
 
-            if (aq != null && aw != null && gc!=null) {//System.out.print("\n13");
-                aq.setStatus("Indisponivel");//System.out.print("\n2");
+            if (aq != null && aw != null && gc!=null) {
+                aq.setStatus("Indisponivel");
                 ctrlEmprestimo.fazerEmprestimo(new Emprestimo(gc, aq, ISBN, codigoAssociado, aw.getTempoMax()));
+                this.ctrlEmprestimo.serializar();
                 JOptionPane.showMessageDialog(null, "Emprestimo realizado");
-
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Dados inválidos");
@@ -128,7 +116,7 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
             GregorianCalendar gc = new GregorianCalendar();
             Date date = new Date(fmt.parse(data).getTime());
             Date hj = new Date();
-            System.out.println("Mes "+date.getMonth());
+           // System.out.println("Mes "+date.getMonth());
             if (date.getMonth() > hj.getMonth()
                     || (date.getDate() > hj.getDate() && date.getMonth() == hj.getMonth())) {
                 JOptionPane.showMessageDialog(null, "Data inválida");

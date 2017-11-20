@@ -54,18 +54,14 @@ public class controleAssociado {
     }
 
     public String retornaPorStatus(String Status) {
-        String x = "Listando " + Status;
-        System.out.println("----"+listaAssociado.size()+"---"+listaAssociado.get(0).getStatus()+" "+Status);
+        String x = "Listando " + Status+"\n";
+        //System.out.println("----" + listaAssociado.size() + "---" + listaAssociado.get(0).getStatus() + " " + Status);
         for (int i = 0; i < listaAssociado.size(); i++) {
             if (listaAssociado.get(i).getStatus().equalsIgnoreCase(Status) == true) {
-
-                x += "\n\nCodigo: " + listaAssociado.get(i).getCodigo() + "\nNome: " + listaAssociado.get(i).getNome()
-                        + "\nEndereço: " + listaAssociado.get(i).getEndereco() + "\nEmail: " + listaAssociado.get(i).getEmail() + "\nMulta: ";
-                if (listaAssociado.get(i).isTemMulta() == true) {
-                    x += "Tem Multa\n\n";
-                } else {
-                    x += "Não tem Multa\n\n";
-                }
+                x +="\n"+ listaAssociado.get(i).toString();
+                // x += "\n\nCodigo: " + listaAssociado.get(i).getCodigo() + "\nNome: " + listaAssociado.get(i).getNome()
+                //       + "\nEndereço: " + listaAssociado.get(i).getEndereco() + "\nEmail: " + listaAssociado.get(i).getEmail() + "\nMulta: ";
+               
 
             }
         }

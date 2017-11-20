@@ -22,8 +22,6 @@ public class controleExemplar {
 
     public ArrayList<Exemplar> listaExemplar = new ArrayList<>();
 
-    ;
-
     public controleExemplar() {
         this.lerExemplar();
     }
@@ -44,11 +42,11 @@ public class controleExemplar {
     }
 
     public String procuraporTitulo(String titulo) {
-        String disp = "Exemplares de " + titulo+ " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
+        String disp = "Exemplares de " + titulo + " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
         for (int i = 0; i < listaExemplar.size(); i++) {
-            if (listaExemplar.get(i).getPublicacao().getTitulo() == titulo && listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
+            if (listaExemplar.get(i).getPublicacao().getTitulo().equalsIgnoreCase(titulo) && listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
                 disp += "\n" + listaExemplar.get(i);
-            } else if (listaExemplar.get(i).getPublicacao().getTitulo() == titulo && listaExemplar.get(i).getStatus().equalsIgnoreCase("Indisponivel")) {
+            } else if (listaExemplar.get(i).getPublicacao().getTitulo().equalsIgnoreCase(titulo) && listaExemplar.get(i).getStatus().equalsIgnoreCase("Indisponivel")) {
                 empre += "\n" + listaExemplar.get(i);
             }
         }
@@ -56,15 +54,15 @@ public class controleExemplar {
     }
 
     public String procuraporISBN(int ISBN) {//System.out.print("---"+this.listaPublicacao.get(0).getStatusEmprestado());
-        String disp = "Exemplares de ISBN "+ ISBN + " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
+        String disp = "Exemplares de ISBN " + ISBN + " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
         for (int i = 0; i < listaExemplar.size(); i++) {
             if (listaExemplar.get(i).getPublicacao().getISBN() == ISBN && listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
                 disp += "\n" + listaExemplar.get(i);
-            } else if (listaExemplar.get(i).getPublicacao().getISBN() == ISBN && listaExemplar.get(i).getStatus().equalsIgnoreCase("Inisponivel")) {
+            } else if (listaExemplar.get(i).getPublicacao().getISBN() == ISBN && listaExemplar.get(i).getStatus().equalsIgnoreCase("Indisponivel")) {
                 empre += "\n" + listaExemplar.get(i);
             }
         }
-        return disp + "\n\n\n" + empre;
+        return disp + "\n\n" + empre;
     }
 
     public void mudastatus(int isbn, int numeroEx, String status) {
@@ -74,14 +72,13 @@ public class controleExemplar {
                 if (listaExemplar.get(i).getISBN() == isbn && listaExemplar.get(i).getNumero() == numeroEx) {
 
                     listaExemplar.get(i).setStatus(status);
-                    System.out.print("-- foi--" + listaExemplar.get(i).getStatus());
+                    // System.out.print("-- foi--" + listaExemplar.get(i).getStatus());
                     break;
                 }
             }
 
             this.serializar();
         } catch (Exception exc) {
-            System.out.print("--exc--");
 
         }
 

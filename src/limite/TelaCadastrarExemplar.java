@@ -46,7 +46,7 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
         adicionarComponente(painel, new JLabel("ISBN"), 0, 0, 1, 1);
         adicionarComponente(painel, tfISBN, 1, 0, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Numero de sequencia"), 0, 1, 1, 1);
+        adicionarComponente(painel, new JLabel("Numero de sequencia (após o 1)"), 0, 1, 1, 1);
         adicionarComponente(painel, tfNumero, 1, 1, 1, 1);
 
         adicionarComponente(painel, new JLabel("Preco"), 0, 2, 1, 1);

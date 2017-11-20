@@ -6,6 +6,7 @@
 package entidade;
 
 import java.util.Vector;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,13 +14,16 @@ import java.util.Vector;
  */
 public class Data {
 
-    private int dia, mes, ano;
+    private int dia, mes;
     private int[] meses = new int[13];
 
-    public Data(int dia, int mes, int ano) {
+    public Data(int dia, int mes) {
         this.dia = dia;
         this.mes = mes;
-        this.ano = ano;
+    }
+
+    public Data() {
+        
         meses[1] = 31;
         meses[2] = 28;
         meses[3] = 31;
@@ -50,26 +54,24 @@ public class Data {
         this.mes = mes;
     }
 
-    public int getAno() {
-        return ano;
-    }
+    
 
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-
-    public int diferenca(Data d1, Data d2) {//Arrumar
-        int diferenca = 0, m1;
-        if (d1.mes == d2.mes && d1.ano == d2.ano) {
-            diferenca = d2.dia - d1.dia;
+    public int diferenca(Data d1, Data d2) {//A primeira precisa ser hj, a segunda o emprestimo
+        int diferenca = 0;
+        if (d1.mes == d2.mes && d1.dia > d2.dia) {//Mes igual data diff
+            diferenca = d1.dia - d2.dia;
         }
-        if (d1.ano == d2.ano && d1.mes < d2.mes) {
-            diferenca =meses[d1.mes] - d1.dia + meses[d2.mes] - d2.dia;
-            for(int i=d1.mes+1; i<d2.mes;i++){
+        else if (d1.dia == d2.dia && d1.mes == d2.mes) {//Mesma data
+        diferenca = 0;
+        }
+        else if ( d1.mes > d2.mes) {//Mes maior
+            diferenca =meses[d1.mes] - d1.dia + d2.dia;
+            for(int i= d1.mes+1; i<d2.mes;i++){
                 diferenca+=meses[i];
             }
         }
-
+       // if(diferenca <)
+        JOptionPane.showMessageDialog(null, diferenca );
         return diferenca;
     }
 }
