@@ -6,15 +6,15 @@
 package limite;
 
 import controle.*;
-import entidade.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.text.SimpleDateFormat;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,34 +25,34 @@ import javax.swing.JTextArea;
  *
  * @author Laiza
  */
-public class TelaExibePublicacoes extends JDialog {
+public class TelaExibeEmprestimos extends JFrame {
 
-    private controlePublicacao ctrlPublicacao;
+    private controleEmprestimo ctrlEmprestimo;
     private final JPanel painel = new JPanel(new GridBagLayout());
-    private final JTextArea resultado = new JTextArea(20, 20);
+    private final JTextArea resultado = new JTextArea(20, 40);
 
-    public TelaExibePublicacoes(controlePublicacao ctrlPublicacao) {
-        this.ctrlPublicacao = ctrlPublicacao;
+    public TelaExibeEmprestimos(controleEmprestimo ctrlEmprestimo) {
+        super("Lista de emprestimos realizados");
+
+        this.ctrlEmprestimo = ctrlEmprestimo;
         painel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(35, 55, 35, 55),
                 BorderFactory.createEmptyBorder()));
 
         resultado.setEditable(false);
-        //ctrlPublicacao.lerPublicacoes();
-        String isso = this.ctrlPublicacao.getListaPublicacao();
-        resultado.setText(isso + "\n\n");
-
+       resultado.setText(this.ctrlEmprestimo.listaEmprestimos());
         JScrollPane scroll = new JScrollPane(resultado,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        adicionarComponente(painel, new JLabel("Lista de publicações cadastradas"), 0, 0, 1, 1);
+        adicionarComponente(painel, new JLabel("Lista emprestimos"), 0, 0, 1, 1);
         adicionarComponente(painel, scroll, 0, 1, 1, 1);
+        
+        
         super.add(painel);
         super.pack();
         super.setLocationRelativeTo(null);
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         super.setVisible(true);
-
     }
 
     private void adicionarComponente(JPanel painel, JComponent componente,
@@ -68,8 +68,4 @@ public class TelaExibePublicacoes extends JDialog {
         c.gridwidth = width;
         painel.add(componente, c);
     }
-
-    /*   public static void main(String args[]){
-        new TelaExibePublicacoes(new controlePublicacao());
-    }*/
 }
