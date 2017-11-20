@@ -65,13 +65,13 @@ public class Data {
         diferenca = 0;
         }
         else if ( d1.mes > d2.mes) {//Mes maior
-            diferenca =meses[d1.mes] - d1.dia + d2.dia;
-            for(int i= d1.mes+1; i<d2.mes;i++){
+            diferenca =meses[d2.mes] - d2.dia + d1.dia;
+            for(int i= d2.mes+1; i<d1.mes;i++){
                 diferenca+=meses[i];
             }
         }
        // if(diferenca <)
-        JOptionPane.showMessageDialog(null, diferenca );
+//        JOptionPane.showMessageDialog(null, diferenca );
         return diferenca;
     }
 }

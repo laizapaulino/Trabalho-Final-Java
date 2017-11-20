@@ -84,7 +84,7 @@ public class controleEmprestimo {
 
             int dia = em.getDataa().getTime().getDate();
             int mes = em.getDataa().getTime().getMonth();
-            JOptionPane.showMessageDialog(null, dia + " " + mes);
+            //JOptionPane.showMessageDialog(null, dia + " " + mes);
 
             //acha a diferença de tempo
             int diferenca;
@@ -103,6 +103,9 @@ public class controleEmprestimo {
                 JOptionPane.showMessageDialog(null, "Sem multa");
             }
             //Exclui do Array
+            verificaLivroExisteDisponivel(listaEmprestimos.get(it).getExemplar().getNumero(), listaEmprestimos.get(it).getISBN()).setStatus("Disponivel");
+            //this.ctrlEmprestimo.serializar();
+
             listaEmprestimos.remove(it);
 
         }
