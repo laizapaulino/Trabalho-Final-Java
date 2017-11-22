@@ -27,33 +27,30 @@ import javax.swing.JOptionPane;
  * @author Laiza
  */
 public class controleEmprestimo {
-    
+
     String nome = "emprestimos.ser";
     public ArrayList<Emprestimo> listaEmprestimos = new ArrayList<>();
     Data hoje = new Data();
-    
+
     public controleEmprestimo() {
         this.lerEmprestimos();
     }
-    
-     
-     public int devolucao2( int ISBN, int n) throws Exception {
+
+    public int devolucao2(int ISBN, int n) throws Exception {
 
         //Achar livro
         int it = this.achaEmprestimo(n, ISBN);
         if (it > -1) {
             Date hj = new Date();
             Emprestimo emprestimo = listaEmprestimos.get(it);
-            
 
-            //listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
             int dia = emprestimo.getDataa().getTime().getDate();
             int mes = emprestimo.getDataa().getTime().getMonth();
 
             int diferenca;
             diferenca = hoje.diferenca(new Data(hj.getDate(), hj.getMonth() + 1), new Data(dia, mes + 1));
-            JOptionPane.showMessageDialog(null, "Foi");
-            
+            //JOptionPane.showMessageDialog(null, "Foi");
+
             emprestimo.getExemplar().setStatus("Disponivel");
 //Verifica se tem MULTA
             int x = diferenca - listaEmprestimos.get(it).getTempoMaximo();
@@ -63,27 +60,27 @@ public class controleEmprestimo {
                 a.procuraAssociado(listaEmprestimos.get(it).getCodigoAssociado()).setTemMulta(true);
                 a.serializar();
                 JOptionPane.showMessageDialog(null, "Multa de R$ " + (diferenca - listaEmprestimos.get(it).getTempoMaximo()));
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Sem multa");
             }
             //Exclui do Array
             //verificaLivroExisteDisponivel(listaEmprestimos.get(it).getExemplar().getNumero(), listaEmprestimos.get(it).getISBN()).setStatus("Disponivel");
             //OExemplar(listaEmprestimos.get(it).getISBN())
-            
-           
-            System.out.print(listaEmprestimos.get(it).getExemplar().getStatus()
-                    + " -- linha128");
 
-            
-                        listaEmprestimos.remove(it);
-            this.serializar(); return 0;
+            //System.out.print(listaEmprestimos.get(it).getExemplar().getStatus()
+              //      + " -- linha128");
+
+            listaEmprestimos.remove(it);
+            this.serializar();
+            return 0;
 
         }
-            JOptionPane.showMessageDialog(null, "Não foi possivel realizar devolução");return 1;
-        
+        JOptionPane.showMessageDialog(null, "Não foi possivel realizar devolução");
+        return 1;
+
     }
-     
+
     public String listaEmprestimos() {
         String x = "";
         //System.out.println("----" + listaAssociado.size() + "---" + listaAssociado.get(0).getStatus() + " " + Status);
@@ -93,13 +90,13 @@ public class controleEmprestimo {
             //       + "\nEndereço: " + listaAssociado.get(i).getEndereco() + "\nEmail: " + listaAssociado.get(i).getEmail() + "\nMulta: ";
 
         }
-        
+
         return x;
     }
-    
+
     public void fazerEmprestimo(Emprestimo novoEmprestimo) {
         try {
-            
+
             listaEmprestimos.add(novoEmprestimo);
             novoEmprestimo.getExemplar().setStatus("Indisponivel");
             //  a.mudastatus(novoEmprestimo.getISBN(), novoEmprestimo.getExemplar().getNumero(), "Indisponivel");
@@ -107,9 +104,9 @@ public class controleEmprestimo {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERRO NO EMPRESTIMO");
         }
-        
+
     }
-    
+
     public Exemplar verificaLivroExisteDisponivel(int numeroEx, int ISBN) {
         controleExemplar e = new controleExemplar();
         for (int i = 0; i < e.listaExemplar.size(); i++) {
@@ -117,28 +114,18 @@ public class controleEmprestimo {
                 return e.listaExemplar.get(i);
             }
         }
-        
+
         return null;
     }
-    
-    public boolean verificaEmprestimoAss(int matricula) {
-        for (int i = 0; i < listaEmprestimos.size(); i++) {
-            if (listaEmprestimos.get(i).getCodigoAssociado() == matricula) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
+
+   
+
     public Associado verificaAssoc(int matricula) {
         controleAssociado a = new controleAssociado();
-        
+
         return a.procuraAssociado(matricula);
     }
-    
-   
-    
-   
+
     public int achaEmprestimo(int n, int ISBN) {
         int iterador = -1;
         for (int i = 0; i < listaEmprestimos.size(); i++) {
@@ -149,7 +136,30 @@ public class controleEmprestimo {
         }
         return iterador;
     }
-    
+
+    public String relatoriodeAtrasos() {
+        String relatorio = "";
+        Date hj = new Date();
+        controleAssociado a = new controleAssociado();
+
+        for (int i = 0; i < listaEmprestimos.size(); i++) {
+
+            int dia = listaEmprestimos.get(i).getDataa().getTime().getDate();
+            int mes = listaEmprestimos.get(i).getDataa().getTime().getMonth();
+
+            int diferenca = hoje.diferenca(new Data(hj.getDate(), hj.getMonth() + 1), new Data(dia, mes + 1));
+            int x = diferenca - listaEmprestimos.get(i).getTempoMaximo();
+            if (x > 0) {
+
+                relatorio += "Codigo do Associado: "+listaEmprestimos.get(i).getCodigoAssociado()+"\nNome do associado: "+
+                        a.procuraAssociado(listaEmprestimos.get(i).getCodigoAssociado()).getNome()+"\nTitulo do exemplar: "+
+                        listaEmprestimos.get(i).getExemplar().getTitulo()+"\n\n";
+            }
+
+        }
+        return relatorio;
+    }
+
     public void serializar() throws Exception {
         try {
             FileOutputStream arquivo = new FileOutputStream(nome);
@@ -163,7 +173,7 @@ public class controleEmprestimo {
             throw new Exception("Arquivo não encontrado!");
         }
     }
-    
+
     public void lerEmprestimos() {
         try {
             FileInputStream arquivo = new FileInputStream(nome);

@@ -83,6 +83,7 @@ public class Emprestimo implements Serializable {
                 "\nCodigo Associado: " + codigoAssociado + 
                 " \nData de emprestimo: "+dataa.getTime().getDate()+"/"+(dataa.getTime().getMonth()+1)+"\n\n";// + "Preço: " + preco;
     }
+    
 
 
 }

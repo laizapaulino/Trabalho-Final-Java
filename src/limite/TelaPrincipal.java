@@ -38,8 +38,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
     private final JButton btnListar = new JButton("Consultas gerais");
     private final JButton btnDevolve = new JButton("Devolver exemplar");
 
-    //private final JButton btnListaPublicacoes = new JButton("Listar publicações");
-    private final JButton btnsair = new JButton("Sair");
+    private final JButton btnGerarRelatorio = new JButton("Gerar relatório de atrasos");
 
     private controleAssociado ctrlAssociado;
     private controleEmprestimo ctrlEmprestimo;
@@ -66,7 +65,8 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
         this.btnEmprestimo.addActionListener(this);
         this.btnListar.addActionListener(this);
         this.btnDevolve.addActionListener(this);
-
+        btnGerarRelatorio.addActionListener(this);
+        
         //this.btnListaPublicacoes.addActionListener(this);
         adicionarComponente(painel, this.btnCadastrarAssociado, 0, 0, 1, 1);
         adicionarComponente(painel, this.btnCadastrarExemplar, 0, 1, 1, 1);
@@ -75,7 +75,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
         adicionarComponente(painel, this.btnDevolve, 0, 4, 1, 1);
         adicionarComponente(painel, this.btnListar, 0, 5, 1, 1);
 
-        //adicionarComponente(painel, this.btnListaPublicacoes, 0, 5, 1, 1);
+        adicionarComponente(painel, this.btnGerarRelatorio, 0, 6, 1, 1);
         super.add(painel);
         super.addWindowListener(this);
         super.pack();
@@ -131,10 +131,10 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
                 new TelaDevolveEmprestimo(this.ctrlEmprestimo, this.ctrlExemplar);
 
             }
-            //if (btn.equals(this.btnListaPublicacoes)) {
-            //  new TelaExibePublicacoes(this.ctrlPublicacao);
+            if (btn.equals(this.btnGerarRelatorio)) {
+              new TelaRelatorio(this.ctrlEmprestimo);
 
-            //}
+            }
         } catch (Exception exc) {
 
         }
