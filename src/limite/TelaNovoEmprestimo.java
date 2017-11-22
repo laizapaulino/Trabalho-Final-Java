@@ -95,7 +95,7 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
             
 
             Associado aw = ctrlEmprestimo.verificaAssoc(codigoAssociado);
-            Exemplar aq = ctrlExemplar.procuraExemplar(ISBN);
+            Exemplar aq = ctrlExemplar.procuraExemplar2(ISBN, numeroExemplar);
             GregorianCalendar gc = criarData(this.tfData.getText());
 
             if (aq != null && aq.getStatus().equalsIgnoreCase("Disponivel") && aw != null && gc!=null) {

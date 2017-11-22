@@ -36,6 +36,54 @@ public class controleEmprestimo {
         this.lerEmprestimos();
     }
     
+     
+     public int devolucao2( int ISBN, int n) throws Exception {
+
+        //Achar livro
+        int it = this.achaEmprestimo(n, ISBN);
+        if (it > -1) {
+            Date hj = new Date();
+            Emprestimo emprestimo = listaEmprestimos.get(it);
+            
+
+            //listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
+            int dia = emprestimo.getDataa().getTime().getDate();
+            int mes = emprestimo.getDataa().getTime().getMonth();
+
+            int diferenca;
+            diferenca = hoje.diferenca(new Data(hj.getDate(), hj.getMonth() + 1), new Data(dia, mes + 1));
+            JOptionPane.showMessageDialog(null, "Foi");
+            
+            emprestimo.getExemplar().setStatus("Disponivel");
+//Verifica se tem MULTA
+            int x = diferenca - listaEmprestimos.get(it).getTempoMaximo();
+            if (x > 0) {
+                controleAssociado a = new controleAssociado();
+                a.procuraAssociado(listaEmprestimos.get(it).getCodigoAssociado()).valorMulta += x;
+                a.procuraAssociado(listaEmprestimos.get(it).getCodigoAssociado()).setTemMulta(true);
+                a.serializar();
+                JOptionPane.showMessageDialog(null, "Multa de R$ " + (diferenca - listaEmprestimos.get(it).getTempoMaximo()));
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Sem multa");
+            }
+            //Exclui do Array
+            //verificaLivroExisteDisponivel(listaEmprestimos.get(it).getExemplar().getNumero(), listaEmprestimos.get(it).getISBN()).setStatus("Disponivel");
+            //OExemplar(listaEmprestimos.get(it).getISBN())
+            
+           
+            System.out.print(listaEmprestimos.get(it).getExemplar().getStatus()
+                    + " -- linha128");
+
+            
+                        listaEmprestimos.remove(it);
+            this.serializar(); return 0;
+
+        }
+            JOptionPane.showMessageDialog(null, "Não foi possivel realizar devolução");return 1;
+        
+    }
+     
     public String listaEmprestimos() {
         String x = "";
         //System.out.println("----" + listaAssociado.size() + "---" + listaAssociado.get(0).getStatus() + " " + Status);
@@ -51,8 +99,8 @@ public class controleEmprestimo {
     
     public void fazerEmprestimo(Emprestimo novoEmprestimo) {
         try {
+            
             listaEmprestimos.add(novoEmprestimo);
-            controleExemplar a = new controleExemplar();
             novoEmprestimo.getExemplar().setStatus("Indisponivel");
             //  a.mudastatus(novoEmprestimo.getISBN(), novoEmprestimo.getExemplar().getNumero(), "Indisponivel");
             this.serializar();
@@ -88,70 +136,13 @@ public class controleEmprestimo {
         return a.procuraAssociado(matricula);
     }
     
-    public void devolucao(int codigoAssociado, int ISBN, int n) throws Exception {
-
-        //Achar livro
-        int it = this.achaEmprestimo(codigoAssociado, ISBN);
-        if (it > -1) {
-            Date hj = new Date();
-            Emprestimo em = listaEmprestimos.get(it);
-            
-            controleExemplar ax = new controleExemplar();
-
-            //listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
-            int dia = em.getDataa().getTime().getDate();
-            int mes = em.getDataa().getTime().getMonth();
-            //JOptionPane.showMessageDialog(null, dia + " " + mes);
-
-            //acha a diferença de tempo
-            int diferenca;
-            diferenca = hoje.diferenca(new Data(hj.getDate(), hj.getMonth() + 1), new Data(dia, mes + 1));
-            JOptionPane.showMessageDialog(null, "Foi");
-            //Verifica se tem MULTA
-            int x = diferenca - listaEmprestimos.get(it).getTempoMaximo();
-            if (x > 0) {
-                controleAssociado a = new controleAssociado();
-                a.procuraAssociado(codigoAssociado).valorMulta += x;
-                a.procuraAssociado(codigoAssociado).setTemMulta(true);
-                a.serializar();
-                JOptionPane.showMessageDialog(null, "Multa de R$ " + (diferenca - listaEmprestimos.get(it).getTempoMaximo()));
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Sem multa");
-            }
-            //Exclui do Array
-            //verificaLivroExisteDisponivel(listaEmprestimos.get(it).getExemplar().getNumero(), listaEmprestimos.get(it).getISBN()).setStatus("Disponivel");
-            //OExemplar(listaEmprestimos.get(it).getISBN())
-            ax.procuraExemplar2(listaEmprestimos.get(it).getISBN(), listaEmprestimos.get(it).getExemplar().getNumero())
-                    .setStatus("Disponivel");
-            listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
-            System.out.print(listaEmprestimos.get(it).getExemplar().getStatus()
-                    + " -- linha128");
-//                         ax.mudastatus(listaEmprestimos.get(it).getISBN(), listaEmprestimos.get(it).getExemplar().getNumero(), "Disponivel");
-
-            listaEmprestimos.remove(it);
-            this.serializar();
-            
-            ax.serializar();
-        }
-        
-    }
+   
     
-    public Exemplar OExemplar(int ISBN) {
-        controleExemplar e = new controleExemplar();
-        for (int i = 0; i < e.listaExemplar.size(); i++) {
-            if (e.listaExemplar.get(i).getStatus().equalsIgnoreCase("Indisponivel") && e.listaExemplar.get(i).getISBN() == ISBN && e.listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
-                return e.listaExemplar.get(i);
-            }
-        }
-        
-        return null;
-    }
-    
-    public int achaEmprestimo(int codigo, int ISBN) {
+   
+    public int achaEmprestimo(int n, int ISBN) {
         int iterador = -1;
         for (int i = 0; i < listaEmprestimos.size(); i++) {
-            if (listaEmprestimos.get(i).getISBN() == ISBN && listaEmprestimos.get(i).getCodigoAssociado() == codigo) {
+            if (listaEmprestimos.get(i).getExemplar().getNumero() == n && listaEmprestimos.get(i).getISBN() == ISBN) {
                 iterador = i;
                 break;
             }

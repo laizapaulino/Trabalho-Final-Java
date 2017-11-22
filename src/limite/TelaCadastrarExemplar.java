@@ -46,7 +46,7 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
         adicionarComponente(painel, new JLabel("ISBN"), 0, 0, 1, 1);
         adicionarComponente(painel, tfISBN, 1, 0, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Numero de sequencia (após o 1)"), 0, 1, 1, 1);
+        adicionarComponente(painel, new JLabel("Numero de sequencia"), 0, 1, 1, 1);
         adicionarComponente(painel, tfNumero, 1, 1, 1, 1);
 
         adicionarComponente(painel, new JLabel("Preco"), 0, 2, 1, 1);
@@ -83,14 +83,23 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
             float preco = Float.parseFloat(tfPreco.getText());
             controlePublicacao x = new controlePublicacao();
             Publicacao a = x.verificaSeISBNExiste(ISBN);
-            if (a != null) {
+            if (a != null && ctrlExemplar.procuraExemplar2(ISBN, numero) == null) {
                 ctrlExemplar.cadastraExemplar(new Exemplar(a, numero, ISBN, preco, "Disponivel"));
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso");
                 this.ctrlExemplar.serializar();
                 this.dispose();
             } else {
-                tfISBN.setText("");
-                JOptionPane.showMessageDialog(this, "Erro dados inválidos");
+                String resp = "";
+                
+                if(a== null)         
+                    resp += "Numero de ISBN inválido";         
+                else{
+                if(ctrlExemplar.procuraExemplar2(ISBN, numero) != null)
+                    resp += "Numero de sequencia já cadastrado";         
+                }
+                
+                JOptionPane.showMessageDialog(this, resp);
+
             }
 
         } catch (Exception exc) {

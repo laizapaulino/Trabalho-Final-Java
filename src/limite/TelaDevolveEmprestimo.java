@@ -59,11 +59,11 @@ public class TelaDevolveEmprestimo extends JFrame implements ActionListener {
         painel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(20, 30, 20, 25),
                 BorderFactory.createEmptyBorder()));
-        tfNumeroExemplar.setEditable(false);
+        /*tfNumeroExemplar.setEditable(false);
         tfISBN.setEditable(false);
 
         adicionarComponente(painel, new JLabel("Codigo do Associado"), 0, 0, 1, 1);
-        adicionarComponente(painel, tfcodigoAssociado, 1, 0, 1, 1);
+        adicionarComponente(painel, tfcodigoAssociado, 1, 0, 1, 1);*/
 
         adicionarComponente(painel, new JLabel("Numero do exemplar"), 0, 2, 1, 1);
         adicionarComponente(painel, tfNumeroExemplar, 1, 2, 1, 1);
@@ -71,8 +71,8 @@ public class TelaDevolveEmprestimo extends JFrame implements ActionListener {
         adicionarComponente(painel, new JLabel("ISBN"), 0, 3, 1, 1);
         adicionarComponente(painel, tfISBN, 1, 3, 1, 1);
         this.btnVai.addActionListener(this);
-        btnVai.setSize(2, 2);
-        adicionarComponente(painel, btnVai, 2, 0, 1, 1);
+        //btnVai.setSize(2, 2);
+        //adicionarComponente(painel, btnVai, 2, 0, 1, 1);
 
         this.btnDevolver.addActionListener(this);
         adicionarComponente(painel, btnDevolver, 3, 5, 1, 3);
@@ -86,21 +86,13 @@ public class TelaDevolveEmprestimo extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         JButton btn = (JButton) ae.getSource();
-        if (btn.equals(this.btnVai)) {
-
-            if (ctrlEmprestimo.verificaEmprestimoAss(Integer.parseInt(tfcodigoAssociado.getText())) == true) {
-                this.tfISBN.setEditable(true);
-                this.tfNumeroExemplar.setEditable(true);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Codigo inválido"+"\n"+ctrlEmprestimo.listaEmprestimos.size());
-                this.tfcodigoAssociado.setText("");
-            }
-        }
+       
         if (btn.equals(this.btnDevolver)) {
             try {
-                this.ctrlEmprestimo.devolucao(Integer.parseInt(this.tfcodigoAssociado.getText()), Integer.parseInt(this.tfISBN.getText()),Integer.parseInt(this.tfNumeroExemplar.getText()));
-           
+               int res = this.ctrlEmprestimo.devolucao2( Integer.parseInt(this.tfISBN.getText()),Integer.parseInt(this.tfNumeroExemplar.getText()));
+           if(res == 0){
+               ctrlExemplar.procuraExemplar2(Integer.parseInt(this.tfISBN.getText()),Integer.parseInt(this.tfNumeroExemplar.getText())).setStatus("Disponivel");
+           }
                 this.ctrlEmprestimo.serializar();
                 this.ctrlExemplar.serializar();
 //                this.dispose();

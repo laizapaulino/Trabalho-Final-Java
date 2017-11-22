@@ -34,7 +34,7 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
     private final JTextField tfTitulo = new JTextField(20);
     private final JTextField tfAutor = new JTextField(20);
     private final JTextField tfEditora = new JTextField(20);
-    //private final JTextField tfStatus = new JTextField(20);
+    private final JTextField tfStatus = new JTextField(20);
     private final JTextField tfExemplar = new JTextField(20);
     private final JButton btnCadastrar = new JButton("Cadastrar");
 
@@ -74,15 +74,17 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
+
             int ISBN = Integer.parseInt(tfISBN.getText());
+
             String titulo = tfTitulo.getText();
             String autor = tfAutor.getText();
             String editora = tfEditora.getText();
-            int exemplar = Integer.parseInt(tfExemplar.getText());
-            controleExemplar ctrlExemplar = new controleExemplar();
+
+           // controleExemplar ctrlExemplar = new controleExemplar();                
+
             if(ctrlPublicacao.verificaSeISBNExiste(ISBN) == null){
                 ctrlPublicacao.cadastraPublicacao(new Publicacao(ISBN, titulo, autor, editora, "Disponivel"));
-                System.out.print("Agora: ");
                 ctrlPublicacao.serializar();
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso");
                 this.dispose();

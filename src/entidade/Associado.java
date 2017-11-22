@@ -101,7 +101,7 @@ public class Associado implements Serializable {
     public String toString() {
         return "Nome: " + getNome()
                 +"\nAssociado: "+getStatus()
-                 + "\nCpdigo do Associado: " + getCodigo()
+                 + "\nCódigo do Associado: " + getCodigo()
                 + "\nEndereco:" + getEndereco()
                 + "\nEmail: " + this.getEmail()
                 +"\nMulta: " + this.isTemMulta()
