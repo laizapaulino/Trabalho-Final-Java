@@ -53,7 +53,8 @@ public class controleEmprestimo {
         try {
             listaEmprestimos.add(novoEmprestimo);
             controleExemplar a = new controleExemplar();
-            a.mudastatus(novoEmprestimo.getISBN(), novoEmprestimo.getExemplar().getNumero(), "Indisponivel");
+            novoEmprestimo.getExemplar().setStatus("Indisponivel");
+            //  a.mudastatus(novoEmprestimo.getISBN(), novoEmprestimo.getExemplar().getNumero(), "Indisponivel");
             this.serializar();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERRO NO EMPRESTIMO");
@@ -87,14 +88,17 @@ public class controleEmprestimo {
         return a.procuraAssociado(matricula);
     }
     
-    public void devolucao(int codigoAssociado, int ISBN) throws Exception {
+    public void devolucao(int codigoAssociado, int ISBN, int n) throws Exception {
 
         //Achar livro
         int it = this.achaEmprestimo(codigoAssociado, ISBN);
         if (it > -1) {
             Date hj = new Date();
             Emprestimo em = listaEmprestimos.get(it);
-            listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
+            
+            controleExemplar ax = new controleExemplar();
+
+            //listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
             int dia = em.getDataa().getTime().getDate();
             int mes = em.getDataa().getTime().getMonth();
             //JOptionPane.showMessageDialog(null, dia + " " + mes);
@@ -117,10 +121,18 @@ public class controleEmprestimo {
             }
             //Exclui do Array
             //verificaLivroExisteDisponivel(listaEmprestimos.get(it).getExemplar().getNumero(), listaEmprestimos.get(it).getISBN()).setStatus("Disponivel");
-            this.serializar();
             //OExemplar(listaEmprestimos.get(it).getISBN())
+            ax.procuraExemplar2(listaEmprestimos.get(it).getISBN(), listaEmprestimos.get(it).getExemplar().getNumero())
+                    .setStatus("Disponivel");
+            listaEmprestimos.get(it).getExemplar().setStatus("Disponivel");
+            System.out.print(listaEmprestimos.get(it).getExemplar().getStatus()
+                    + " -- linha128");
+//                         ax.mudastatus(listaEmprestimos.get(it).getISBN(), listaEmprestimos.get(it).getExemplar().getNumero(), "Disponivel");
 
-            //listaEmprestimos.remove(it);
+            listaEmprestimos.remove(it);
+            this.serializar();
+            
+            ax.serializar();
         }
         
     }

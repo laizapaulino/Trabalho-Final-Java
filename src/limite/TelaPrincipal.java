@@ -118,8 +118,9 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
                 //ctrlPublicacao.lerPublicacoes();
             }
             if (btn.equals(this.btnEmprestimo)) {
-                new TelaNovoEmprestimo(this.ctrlEmprestimo);
+                new TelaNovoEmprestimo(this.ctrlEmprestimo, this.ctrlExemplar);
                 this.ctrlEmprestimo.serializar();
+                this.ctrlExemplar.serializar();
                 ctrlEmprestimo.lerEmprestimos();
             }
             if (btn.equals(this.btnListar)) {
@@ -127,7 +128,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
 
             }
             if (btn.equals(this.btnDevolve)) {
-                new TelaDevolveEmprestimo(this.ctrlEmprestimo);
+                new TelaDevolveEmprestimo(this.ctrlEmprestimo, this.ctrlExemplar);
 
             }
             //if (btn.equals(this.btnListaPublicacoes)) {
@@ -179,6 +180,6 @@ public class TelaPrincipal extends JFrame implements ActionListener, WindowListe
     public static void main(String h[]) {
         new TelaPrincipal();
         Date a = new Date();
-        System.out.print(a.getMonth());
+        //System.out.print(a.getMonth());
     }
 }

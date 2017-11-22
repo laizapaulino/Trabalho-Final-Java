@@ -38,6 +38,7 @@ import javax.swing.text.MaskFormatter;
 public class TelaDevolveEmprestimo extends JFrame implements ActionListener {
 
     private final controleAssociado assoc = new controleAssociado();
+    private controleExemplar ctrlExemplar;
     private controleEmprestimo ctrlEmprestimo;
     private final JPanel painel = new JPanel(new GridBagLayout());
     private final JTextField tfNumeroExemplar = new JTextField(20);
@@ -49,10 +50,11 @@ public class TelaDevolveEmprestimo extends JFrame implements ActionListener {
     private final JButton btnDevolver = new JButton("Devolver");
     private final JButton btnVai = new JButton("Busca");
 
-    public TelaDevolveEmprestimo(controleEmprestimo ctrl) {
+    public TelaDevolveEmprestimo(controleEmprestimo ctrl, controleExemplar ctrlExemplar) {
         super("Devolve Emprestimo");
         this.ctrlEmprestimo = ctrl;
-        this.ctrlEmprestimo.lerEmprestimos();
+        this.ctrlExemplar = ctrlExemplar;
+        //this.ctrlEmprestimo.lerEmprestimos();
 
         painel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(20, 30, 20, 25),
@@ -97,9 +99,10 @@ public class TelaDevolveEmprestimo extends JFrame implements ActionListener {
         }
         if (btn.equals(this.btnDevolver)) {
             try {
-                this.ctrlEmprestimo.devolucao(Integer.parseInt(this.tfcodigoAssociado.getText()), Integer.parseInt(this.tfISBN.getText()));
+                this.ctrlEmprestimo.devolucao(Integer.parseInt(this.tfcodigoAssociado.getText()), Integer.parseInt(this.tfISBN.getText()),Integer.parseInt(this.tfNumeroExemplar.getText()));
            
                 this.ctrlEmprestimo.serializar();
+                this.ctrlExemplar.serializar();
 //                this.dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERRO");

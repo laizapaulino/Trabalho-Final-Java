@@ -19,12 +19,12 @@ public class Exemplar implements Serializable {
     private String status;
     Publicacao publicacao = new Publicacao();
 
-    public Exemplar(Publicacao pub, int numero, int ISBN, float preco) {
+    public Exemplar(Publicacao pub, int numero, int ISBN, float preco, String status) {
         this.publicacao = pub;
         this.numero = numero;
         this.ISBN = ISBN;
         this.preco = preco;
-        this.status = "Disponivel";
+        this.status = status;
 
     }
 
@@ -42,6 +42,7 @@ public class Exemplar implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+        
     }
 
     public int getNumero() {

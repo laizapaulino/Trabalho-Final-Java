@@ -18,18 +18,19 @@ public class Associado implements Serializable {
     private String endereco;
     private String email;
     private String status;
-    private boolean temMulta;
+    private boolean temMulta ;
     private int tempoMax;
     public  int valorMulta ;
 
-    public Associado(int codigo, String nome, String endereco, String email, String status) {
+    public Associado(int codigo, String nome, String endereco, String email, String status, boolean multa, int valorMulta) {
         this.valorMulta = 0;
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;
         this.status = status;
-        this.temMulta = false;
+        this.temMulta = multa;
+        this.valorMulta = valorMulta;
         if (status == "Graduação") {
             this.tempoMax = 7;
         } else if (status == "Pós-graduação") {
@@ -100,11 +101,11 @@ public class Associado implements Serializable {
     public String toString() {
         return "Nome: " + getNome()
                 +"\nAssociado: "+getStatus()
-                // + "\nNumero: " + listaPublicacao.get(i).getExemplar().getNumero()
+                 + "\nCpdigo do Associado: " + getCodigo()
                 + "\nEndereco:" + getEndereco()
                 + "\nEmail: " + this.getEmail()
                 +"\nMulta: " + this.isTemMulta()
-                +"\nValor da multa: "+ this.valorMulta+"\n";
+                +"\nValor da multa: R$"+ this.valorMulta+"\n";
 
     }
 }

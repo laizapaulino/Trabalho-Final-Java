@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,15 +32,26 @@ public class controleExemplar {
     }
 
     public Exemplar procuraExemplar(int ISBN) {
-        Exemplar x = null;
+       // Exemplar x = null;
         for (int i = 0; i < listaExemplar.size(); i++) {
-            if (listaExemplar.get(i).getISBN() == ISBN) {
-                x = listaExemplar.get(i);
-                break;
+            if (listaExemplar.get(i).getISBN() == ISBN && listaExemplar.get(i).getStatus().equalsIgnoreCase("Disponivel")) {
+                return listaExemplar.get(i);
+                
             }
         }
-        return x;
+        return null;
     }
+    public Exemplar procuraExemplar2(int ISBN, int numeroseq) {
+       // Exemplar x = null;
+        for (int i = 0; i < listaExemplar.size(); i++) {
+            if (listaExemplar.get(i).getISBN() == ISBN && listaExemplar.get(i).getNumero() == numeroseq) {
+                return listaExemplar.get(i);
+                
+            }
+        }
+        return null;
+    }
+
 
     public String procuraporTitulo(String titulo) {
         String disp = "Exemplares de " + titulo + " disponiveis:\n\n", empre = "Exemplares NÃO disponiveis:\n\n";
@@ -76,10 +88,9 @@ public class controleExemplar {
                     break;
                 }
             }
-
             this.serializar();
         } catch (Exception exc) {
-
+            JOptionPane.showMessageDialog(null, "COntrole Exemplarmuda status");
         }
 
     }
@@ -87,7 +98,7 @@ public class controleExemplar {
     public String getListaExemplar() {
         String isso = "";
         for (int i = 0; i < listaExemplar.size(); i++) {
-            isso += listaExemplar.get(i).toString();
+            isso += listaExemplar.get(i).toString()+"\n\n";
         }
         return isso;
     }

@@ -71,7 +71,7 @@ public class Data {
             }
         }
        // if(diferenca <)
-//        JOptionPane.showMessageDialog(null, diferenca );
+        JOptionPane.showMessageDialog(null, "Hoje: "+d1.getDia() +"/" +d1.getMes()+"\nEmprestado: "+d2.getDia()+"/"+d2.getMes() );
         return diferenca;
     }
 }

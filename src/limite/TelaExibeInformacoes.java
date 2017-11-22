@@ -35,7 +35,7 @@ public class TelaExibeInformacoes extends JFrame implements ActionListener {
     private final JButton btnListaExemplar = new JButton("Listar exemplares");
     private final JButton btnListaPublicacoes = new JButton("Listar publicações");
     private final JButton btnListaAssociados = new JButton("Listar associados");
-        private final JButton btnConsultaPublicacao = new JButton("Consultar publicaçao");
+        private final JButton btnConsultaPublicacao = new JButton("Consultar exemplares da publicaçao");
         private final JButton btnListaEmprestimos = new JButton("Lista emprestimos");
 
     private controlePublicacao ctrlPublicacao;

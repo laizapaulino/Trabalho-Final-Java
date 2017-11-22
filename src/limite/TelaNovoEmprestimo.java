@@ -35,6 +35,8 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
 
     private final controleAssociado assoc = new controleAssociado();
     private controleEmprestimo ctrlEmprestimo;
+        private controleExemplar ctrlExemplar;
+
     private final JPanel painel = new JPanel(new GridBagLayout());
     private final JTextField tfNumeroExemplar = new JTextField(20);
     private final JTextField tfISBN = new JTextField(20);
@@ -46,9 +48,10 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
     private final JFormattedTextField tfData = new JFormattedTextField(new SimpleDateFormat("dd/MM/yyyy"));
     private final JButton btnCadastrar = new JButton("Cadastrar emprestimo");
 
-    public TelaNovoEmprestimo(controleEmprestimo controle) {
+    public TelaNovoEmprestimo(controleEmprestimo controle, controleExemplar controle2) {
         super("Cadastra Emprestimo");
         this.ctrlEmprestimo = controle;
+        this.ctrlExemplar = controle2;
 
         painel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(20, 30, 20, 25),
@@ -92,18 +95,23 @@ public class TelaNovoEmprestimo extends JFrame implements ActionListener {
             
 
             Associado aw = ctrlEmprestimo.verificaAssoc(codigoAssociado);
-            Exemplar aq = ctrlEmprestimo.verificaLivroExisteDisponivel(numeroExemplar, ISBN);
+            Exemplar aq = ctrlExemplar.procuraExemplar(ISBN);
             GregorianCalendar gc = criarData(this.tfData.getText());
 
-            if (aq != null && aw != null && gc!=null) {
-                aq.setStatus("Indisponivel");
+            if (aq != null && aq.getStatus().equalsIgnoreCase("Disponivel") && aw != null && gc!=null) {
+               // aq.setStatus("Indisponivel");
+                
                 ctrlEmprestimo.fazerEmprestimo(new Emprestimo(gc, aq, ISBN, codigoAssociado, aw.getTempoMax()));
                 this.ctrlEmprestimo.serializar();
                 JOptionPane.showMessageDialog(null, "Emprestimo realizado");
                 this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Dados inválidos");
+            } else {if(aq == null || aq.getStatus().equalsIgnoreCase("Indisponivel"))
+                JOptionPane.showMessageDialog(null, "Impossivel emprestar exemplar");
+            if(aw == null)
+                JOptionPane.showMessageDialog(null, "Codigo de associado inválido");
             }
+            this.ctrlEmprestimo.serializar();
+            this.ctrlExemplar.serializar();
         } catch (Exception exc) {
             System.out.print("\nd1");
 

@@ -78,13 +78,13 @@ public class TelaCadastrarExemplar extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         try {
-            int numero = Integer.parseInt("1" + tfNumero.getText());
+            int numero = Integer.parseInt( tfNumero.getText());
             int ISBN = Integer.parseInt(tfISBN.getText());
             float preco = Float.parseFloat(tfPreco.getText());
             controlePublicacao x = new controlePublicacao();
             Publicacao a = x.verificaSeISBNExiste(ISBN);
             if (a != null) {
-                ctrlExemplar.cadastraExemplar(new Exemplar(a, numero, ISBN, preco));
+                ctrlExemplar.cadastraExemplar(new Exemplar(a, numero, ISBN, preco, "Disponivel"));
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso");
                 this.ctrlExemplar.serializar();
                 this.dispose();

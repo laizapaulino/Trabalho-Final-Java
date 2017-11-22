@@ -72,7 +72,7 @@ public class Publicacao implements Serializable {
                    // + "\nNumero: " + listaPublicacao.get(i).getExemplar().getNumero()
                     + "\nISBN: " + getISBN()
                     + "\nAutor: " + getAutor()
-                    + "\nEditora: " +getEditora();
+                    + "\nEditora: " +getEditora()+"\n\n";
     }
 
 }

@@ -58,8 +58,8 @@ public class TelaCadastrarPublicacao extends JFrame implements ActionListener {
         adicionarComponente(painel, new JLabel("Editora"), 0, 4, 1, 1);
         adicionarComponente(painel, tfEditora, 1, 4, 1, 1);
 
-        adicionarComponente(painel, new JLabel("Numero sequencia do exemplar"), 0, 5, 1, 1);
-        adicionarComponente(painel, tfExemplar, 1, 5, 1, 1);
+        //adicionarComponente(painel, new JLabel("Numero sequencia do exemplar"), 0, 5, 1, 1);
+        //adicionarComponente(painel, tfExemplar, 1, 5, 1, 1);
         btnCadastrar.addActionListener(this);
         adicionarComponente(painel, btnCadastrar, 2, 6, 1, 3);
 

@@ -87,7 +87,7 @@ public class TelaCadastrarAssociado extends JFrame implements ActionListener {
             String status = cbStatus.getSelectedItem().toString();
 
             if (ctrlAssociado.procuraAssociado(codigo) == null) {
-                ctrlAssociado.cadastraAssociado(new Associado(codigo, nome, endereco, email, status));
+                ctrlAssociado.cadastraAssociado(new Associado(codigo, nome, endereco, email, status, false, 0));
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso");
                 ctrlAssociado.serializar();
                 dispose();
